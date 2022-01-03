@@ -43,3 +43,23 @@ class Camera:
         for i in range(len(S)-1):
             x[i] = (S[i] + S[i+1])/2
         return x; 
+
+class Camera2Screen:
+    def __init__(self,X,Y,Do,f,Di):
+        self.f=f # focal length
+        self.X=X
+        self.Y=Y
+        self.Do=Do
+        self.Di=Di
+    def camera2screen(self):
+        delta = 1/self.Do + 1/self.Di - 1/self.f # delta rule in transport equation
+        T = np.array([[-self.Do/self.Di , self.Do*delta],[ 1/self.Di , 1/self.f-1/self.Di]]) # transport equation
+        arr1 = np.array(self.X[:])
+        arr2 = np.array(self.Y[:])
+        concat = np.concatenate((arr1, arr2))
+        R = np.dot(T,concat)
+        x = R[0,:][np.newaxis]
+        y = R[1,:][np.newaxis]
+        x = x.reshape(np.shape(self.X))
+        y = y.reshape(np.shape(self.Y))
+        return x,y 

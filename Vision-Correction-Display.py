@@ -63,3 +63,18 @@ class Camera2Screen:
         x = x.reshape(np.shape(self.X))
         y = y.reshape(np.shape(self.Y))
         return x,y 
+Sampling = 20
+camera = Camera(50,8,375,128)
+display = Display(5,0.078,128,12)
+Vs = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*Sampling)+1)) # used in matrix length,concatination
+Yo=np.zeros((len(Vs),camera.resolution))
+Vo=np.zeros((len(Vs),camera.resolution))
+camera_sampling=camera.sampling()
+
+for i in range(camera.resolution):
+    Yss = np.dot(np.ones((len(Vs),1)),camera_sampling[i])
+    Ys = Yss[np.newaxis]
+    camera2object = Camera2Screen(Ys,Vs[np.newaxis],camera.Do,camera.f,camera.di())
+    Yo[:,i],Vo[:,i] = camera2object.camera2screen()
+
+print(np.shape(Yss))

@@ -26,11 +26,12 @@ class Display:
 
 class Camera:
     Do=250 #distance between camera and screen
-    def _init_(self,f,fStop,focus,resolution):
+    def __init__(self,f,fStop,focus,resolution,display):
         self.f=f # focal length
         self.fStop=fStop
         self.focus=focus
         self.resolution=resolution
+        self.display=display
     def aperture(self):
         return(self.f/self.fStop)
     def di(self):  # distance between camera sensor and lens 
@@ -39,7 +40,7 @@ class Camera:
         return (screen_size/Do*self.di())    
     def sampling(self):
         x = np.zeros((self.resolution,1))
-        S = np.linspace(self.sensor_width(self.Do,display.size())/2, -self.sensor_width(self.Do,display.size())/2, self.resolution+1)
+        S = np.linspace(self.sensor_width(self.Do,self.display.size())/2, -self.sensor_width(self.Do,self.display.size())/2, self.resolution+1)
         for i in range(len(S)-1):
             x[i] = (S[i] + S[i+1])/2
         return x; 
@@ -63,18 +64,34 @@ class Camera2Screen:
         x = x.reshape(np.shape(self.X))
         y = y.reshape(np.shape(self.Y))
         return x,y 
-Sampling = 20
-camera = Camera(50,8,375,128)
-display = Display(5,0.078,128,12)
-Vs = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*Sampling)+1)) # used in matrix length,concatination
-Yo=np.zeros((len(Vs),camera.resolution))
-Vo=np.zeros((len(Vs),camera.resolution))
-camera_sampling=camera.sampling()
 
-for i in range(camera.resolution):
-    Yss = np.dot(np.ones((len(Vs),1)),camera_sampling[i])
-    Ys = Yss[np.newaxis]
-    camera2object = Camera2Screen(Ys,Vs[np.newaxis],camera.Do,camera.f,camera.di())
-    Yo[:,i],Vo[:,i] = camera2object.camera2screen()
+class BuildMatrix:
+    def __init__(self,display,camera,Do):
+        #self.f=f # focal length
+        self.display=display
+        self.camera=camera
+        self.Do=Do
+    def backword_transpose(self):   
+        Sampling = 20
+        #camera = Camera(50,8,375,128)
+        #display = Display(5,0.078,128,12)
+        Vs = np.linspace(-self.camera.aperture()/2,self.camera.aperture()/2,int((self.camera.aperture()*Sampling)+1)) # used in matrix length,concatination
+        Yo=np.zeros((len(Vs),self.camera.resolution))
+        Vo=np.zeros((len(Vs),self.camera.resolution))
+        camera_sampling=self.camera.sampling()
 
-print(np.shape(Yss))
+        for i in range(self.camera.resolution):
+            Yss = np.dot(np.ones((len(Vs),1)),camera_sampling[i])
+            Ys = Yss[np.newaxis]
+            camera2object = Camera2Screen(Ys,Vs[np.newaxis],self.camera.Do,self.camera.f,self.camera.di())
+            Yo[:,i],Vo[:,i] = camera2object.camera2screen()
+            Vo[:,i] = Vo[:,i] / (3.14*180)
+
+        return Yo    
+
+xx=Display(5,0.078,128,12)
+yy=Camera(50,8,375,128,xx)
+
+xjj = BuildMatrix(xx,yy,250)
+
+print(xjj.backword_transpose())

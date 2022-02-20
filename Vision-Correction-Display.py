@@ -89,6 +89,40 @@ class BuildMatrix:
 
         return Yo    
 
+class BackwardTransport:
+    def __init__(self,offset,Bvals,Display, Camera,Vs,Do,XtraPix):
+        self.offset=offset
+        self.Bvals=Bvals
+        self.Display=Display
+        self.Camera=Camera
+        self.Vs=Vs
+        self.Do=Do
+        self.xtrapix=XtraPix
+    def BackwardTransportExt3(self):
+        Yo=np.zeros(len(self.Vs),self.Camera.resolution)
+        Vo=np.zeros(len(self.Vs),self.Camera.resolution)
+        Ang_Res=self.Display.angular_res
+        for j in range(1,self.Camera.resolution):
+            Ys=np.ones(len(self.Vs),1)*self.Camera.sampling(j)
+            camera2object = Camera2Screen(self.Ys,self.Vs,self.camera.Do,self.camera.f,self.camera.di())
+            Yo[:,j],Vo[:,j] = camera2object.camera2screen()
+            Vo[:,j]=Vo[:,j]/(3.14*180)
+            Yo[:,j]=Yo[:,j]+self.offset
+            #line 12 BackwardTransportExt3 fe matlab 
+            S=Vo[:,j]
+            K=S
+            
+            if(Ang_Res==1):
+                K[:]=1
+            else:
+                for a in range(1,len(self.Bvals)-1):
+                     K=S
+                    #line 20 BackwardTransportExt3 fe matlap makan K=S
+                #line 23 BackwardTransportExt3 fe matlap
+            Vo[:,j]=K
+        if(Ang_Res==1):#approximately equal
+            #from 29 to 35 BackwardTransportExt3
+
 xx=Display(5,0.078,128,12)
 yy=Camera(50,8,375,128,xx)
 

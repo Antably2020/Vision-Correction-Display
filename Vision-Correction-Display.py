@@ -15,7 +15,7 @@ class Display:
         return(self.screen_pixels+self.padding)
 
     def size(self):
-        return(self.screen_pitch()*self.screen_pixels)     
+        return(self.screen_pitch()*self.resolution())     
          
     def sampling(self):
         x = np.zeros((self.resolution(),1))
@@ -36,11 +36,11 @@ class Camera:
         return(self.f/self.fStop)
     def di(self):  # distance between camera sensor and lens 
         return(self.f*self.focus/(self.focus-self.f))
-    def sensor_width(self,Do,screen_size):
-        return (screen_size/Do*self.di())    
+    def sensor_width(self,Do,screen_pixels,screen_pitch):
+        return (screen_pixels*screen_pitch/Do*self.di())    
     def sampling(self):
         x = np.zeros((self.resolution,1))
-        S = np.linspace(self.sensor_width(self.Do,self.display.size())/2, -self.sensor_width(self.Do,self.display.size())/2, self.resolution+1)
+        S = np.linspace(self.sensor_width(self.Do,self.display.screen_pixels,self.display.screen_pitch())/2, -self.sensor_width(self.Do,self.display.screen_pixels,self.display.screen_pitch())/2, self.resolution+1)
         for i in range(len(S)-1):
             x[i] = (S[i] + S[i+1])/2
         return x; 
@@ -71,7 +71,25 @@ class BuildMatrix:
         self.display=display
         self.camera=camera
         self.Do=Do
-    def backword_transpose(self):   
+    def backword_transpose(self):  
+        '''
+        Sampling = 20
+        #camera = Camera(50,8,375,128)
+        #display = Display(5,0.078,128,12)
+        Vs = np.linspace(-self.camera.aperture()/2,self.camera.aperture()/2,int((self.camera.aperture()*Sampling)+1)) # used in matrix length,concatination
+        Yo=np.zeros((len(Vs),self.camera.resolution))
+        Vo=np.zeros((len(Vs),self.camera.resolution))
+        camera_sampling=self.camera.sampling()
+
+        for i in range(1,self.camera.resolution):
+            Yss = np.dot(np.ones((len(Vs),1)),camera_sampling[i])
+            Ys = Yss[np.newaxis]
+            camera2object = Camera2Screen(Ys,Vs[np.newaxis],self.camera.Do,self.camera.f,self.camera.di())
+            Yo[:,i],Vo[:,i] = camera2object.camera2screen()
+            Vo[:,i] = Vo[:,i] / (3.14*180)
+
+        return Ys 
+        '''  
         Sampling = 20
         #camera = Camera(50,8,375,128)
         #display = Display(5,0.078,128,12)
@@ -87,7 +105,7 @@ class BuildMatrix:
             Yo[:,i],Vo[:,i] = camera2object.camera2screen()
             Vo[:,i] = Vo[:,i] / (3.14*180)
 
-        return Yo    
+        return Yo 
 
 class BackwardTransport:
     def __init__(self,offset,Bvals,Display, Camera,Vs,Do,XtraPix):
@@ -98,20 +116,32 @@ class BackwardTransport:
         self.Vs=Vs
         self.Do=Do
         self.xtrapix=XtraPix
+
+    def dsearchn(x, v):
+        return np.where(np.abs(x-v) == np.abs(x-v).min())[0]   
+
+
     def BackwardTransportExt3(self):
-        Yo=np.zeros(len(self.Vs),self.Camera.resolution)
-        Vo=np.zeros(len(self.Vs),self.Camera.resolution)
+        Yo=np.zeros((len(self.Vs),self.Camera.resolution))
+        Vo=np.zeros((len(self.Vs),self.Camera.resolution))
+        camera_sampling=self.Camera.sampling()
+        display_sampling=self.Display.sampling()
         Ang_Res=self.Display.angular_res
-        for j in range(1,self.Camera.resolution):
-            Ys=np.ones(len(self.Vs),1)*self.Camera.sampling(j)
-            camera2object = Camera2Screen(self.Ys,self.Vs,self.camera.Do,self.camera.f,self.camera.di())
+        for j in range(self.Camera.resolution):
+            #Ys=np.ones(len(self.Vs),1)*self.Camera.sampling(j)
+            Yss = np.dot(np.ones((len(Vs),1)),camera_sampling[j])
+            Ys = Yss[np.newaxis]
+            camera2object = Camera2Screen(Ys,self.Vs[np.newaxis],self.Camera.Do,self.Camera.f,self.Camera.di())
             Yo[:,j],Vo[:,j] = camera2object.camera2screen()
             Vo[:,j]=Vo[:,j]/(3.14*180)
             Yo[:,j]=Yo[:,j]+self.offset
-            #line 12 BackwardTransportExt3 fe matlab 
-            S=Vo[:,j]
-            K=S
+            #line 12 BackwardTransportExt3 fe matlab
             
+            Yo[:,j] = BackwardTransport.dsearchn(display_sampling,Yo[:,j]) 
+            #S=Vo[:,j]
+            #K=S
+        return Yo       
+    '''
             if(Ang_Res==1):
                 K[:]=1
             else:
@@ -120,12 +150,15 @@ class BackwardTransport:
                     #line 20 BackwardTransportExt3 fe matlap makan K=S
                 #line 23 BackwardTransportExt3 fe matlap
             Vo[:,j]=K
-        if(Ang_Res==1):#approximately equal
+        #if(Ang_Res==1):#approximately equal
             #from 29 to 35 BackwardTransportExt3
-
+    '''
+    
 xx=Display(5,0.078,128,12)
 yy=Camera(50,8,375,128,xx)
 
-xjj = BuildMatrix(xx,yy,250)
+#print (np.shape(xx.sampling()))
 
-print(xjj.backword_transpose())
+Vs = np.linspace(-yy.aperture()/2,yy.aperture()/2,int((yy.aperture()*20)+1)) # used in matrix length,concatination
+xjj = BackwardTransport(0,0,xx,yy,Vs,250,0)
+print(xjj.BackwardTransportExt3())

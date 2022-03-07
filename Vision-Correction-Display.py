@@ -1,5 +1,6 @@
+from cv2 import imshow
 import numpy as np
-
+import cv2
 class Display:
     def __init__(self,angular_res,screen_pixel_pitch,screen_pixels,padding):
         self.angular_res=angular_res
@@ -129,7 +130,7 @@ class BackwardTransport:
         Ang_Res=self.Display.angular_res
         for j in range(self.Camera.resolution):
             #Ys=np.ones(len(self.Vs),1)*self.Camera.sampling(j)
-            Yss = np.dot(np.ones((len(Vs),1)),camera_sampling[j])
+            Yss = np.dot(np.ones((len(self.Vs),1)),camera_sampling[j])
             Ys = Yss[np.newaxis]
             camera2object = Camera2Screen(Ys,self.Vs[np.newaxis],self.Camera.Do,self.Camera.f,self.Camera.di())
             Yo[:,j],Vo[:,j] = camera2object.camera2screen()
@@ -154,11 +155,26 @@ class BackwardTransport:
             #from 29 to 35 BackwardTransportExt3
     '''
     
-xx=Display(5,0.078,128,12)
-yy=Camera(50,8,375,128,xx)
+display=Display(5,0.078,128,12)
+camera=Camera(50,8,375,128,display)
 
 #print (np.shape(xx.sampling()))
 
-Vs = np.linspace(-yy.aperture()/2,yy.aperture()/2,int((yy.aperture()*20)+1)) # used in matrix length,concatination
-xjj = BackwardTransport(0,0,xx,yy,Vs,250,0)
-print(xjj.BackwardTransportExt3())
+#Vs = np.linspace(-yy.aperture()/2,yy.aperture()/2,int((yy.aperture()*20)+1)) # used in matrix length,concatination
+#xjj = BackwardTransport(0,0,xx,yy,Vs,250,0)
+#print(xjj.BackwardTransportExt3())
+img = cv2.imread('D:/MIU/Graduation Project/Code/supplement/CODE/images/original/0084.png', cv2.IMREAD_UNCHANGED)  # Fill in the image read function here
+print(np.shape(img))
+##scale image to camera resolution
+dim = (int(np.shape(img)[0]*camera.resolution/np.shape(img)[1]),int(np.shape(img)[1]*camera.resolution/np.shape(img)[1]))
+IMG = cv2.resize(img,dim)
+print(np.shape(IMG))
+CONTRAST            = 1.0
+BIAS                = (1-CONTRAST)/CONTRAST;    
+rows, cols, color = np.shape(img)
+REC                 = np.zeros((rows, cols, color))
+num = 0
+
+#cv2.imshow('original',img)
+#cv2.waitKey(0)
+#cv2.destroyAllWindows()

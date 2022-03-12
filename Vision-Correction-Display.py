@@ -1,9 +1,12 @@
-import numpy as np
-import math
 import scipy.io as sc
 import os
 import cv2
+from tkinter.tix import CELL
+from turtle import shape
+import numpy as np
+import math
 from scipy import sparse
+from os.path import dirname, join as pjoin
 
 class Display:
     def __init__(self,Angular_HRes,screen_pixel_pitch,screen_pixels,padding,depth):
@@ -27,11 +30,11 @@ class Display:
         S = np.linspace(-self.size()/2, self.size()/2, self.resolution()+1)
         for i in range(len(S)-1):
             x[i] = (S[i] + S[i+1])/2
-        return x;           
+        return x          
 
 class Camera:
     Do=250 #distance between camera and screen
-    def _init_(self,f,fStop,focus,resolution,display):
+    def __init__(self,f,fStop,focus,resolution,display):
         self.f=f # focal length
         self.fStop=fStop
         self.focus=focus
@@ -48,7 +51,7 @@ class Camera:
         S = np.linspace(self.sensor_width(self.Do,self.display.size())/2, -self.sensor_width(self.Do,self.display.size())/2, self.resolution+1)
         for i in range(len(S)-1):
             x[i] = (S[i] + S[i+1])/2
-        return x; 
+        return x
 
 class Camera2Screen:
     def __init__(self,X,Y,Do,f,Di):
@@ -103,7 +106,7 @@ class BackwardTransport:
         self.Camera=Camera
         self.Vs=Vs
         self.Do=Do
-        self.xtrapix=XtraPix
+        self.Xtrapix=XtraPix
 
     def dsearchn(x, v):
         return np.where(np.abs(x-v) == np.abs(x-v).min())[0]   
@@ -143,7 +146,7 @@ class BackwardTransport:
         
         Yo[Vo >  Ang_Res*self.Xtrapix] = Yo[Vo >  Ang_Res*self.Xtrapix] + self.Xtrapix
         Vo = ((Vo+Ang_Res-1)%Ang_Res)+1
-        return Vo
+        return Yo,Vo
 
 class BuildMatrix:
     def __init__(self,display,camera,Do, Epsilon_x , Epsilon_y,angular,Backward):
@@ -322,14 +325,28 @@ class Composite5:
         
         
 
-    
-         
-        
 
 
-display=Display(5,0.078,128,12)
+display=Display(5,0.078,128,12,5.514)
 camera=Camera(50,8,375,128,display)
 
+angular = Angular_Boundary(5, display.screen_pixel_pitch,display.depth , 5)
+
+#print (np.shape(xx.sampling()))
+
+Vs = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
+Us = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
+HBvals= Angular_Boundary(5, display.screen_pixel_pitch, display.depth, 5).Angular_BoundaryExt2()
+xjj = BackwardTransport(0,HBvals,display,camera,Vs,250,5)
+b = xjj.BackwardTransportExt3()
+zoairjr = BackwardTransport(0, HBvals, display, camera, Vs, 250, angular.XtraPix)
+zoair = BackwardTransport(0, HBvals, display, camera, Us, 250, angular.XtraPix)
+bb = BuildMatrix(display,camera,250,0,0,angular,zoair)
+#print(bb.build_matrix())
+a = bb.build_matrix()
+print(a.shape)
+
+'''
 #print (np.shape(xx.sampling()))
 
 #Vs = np.linspace(-yy.aperture()/2,yy.aperture()/2,int((yy.aperture()*20)+1)) # used in matrix length,concatination
@@ -350,3 +367,4 @@ num = 0
 #cv2.imshow('original',img)
 #cv2.waitKey(0)
 #cv2.destroyAllWindows()
+'''

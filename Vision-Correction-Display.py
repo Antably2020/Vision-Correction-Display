@@ -3,6 +3,7 @@ import math
 import scipy.io as sc
 import os
 import cv2
+from scipy import sparse
 
 class Display:
     def _init_(self,Angular_HRes,screen_pixel_pitch,screen_pixels,padding,depth):
@@ -144,6 +145,93 @@ class BackwardTransport:
         Vo = ((Vo+Ang_Res-1)%Ang_Res)+1
         return Vo
 
+class BuildMatrix:
+    def __init__(self,display,camera,Do, Epsilon_x , Epsilon_y,angular,Backward):
+        #self.f=f # focal length
+        self.display=display
+        self.camera=camera
+        self.Do=Do
+        self.Epsilon_x=Epsilon_x
+        self.Epsilon_y=Epsilon_y
+        self.angular = angular
+        self.Backward=Backward
+    def build_matrix(self):   
+        Sampling = 20
+        psf_size = 240
+
+        ind_r = np.zeros(37359783)
+        print(ind_r.shape)
+        ind_c = np.zeros(37359783)
+        val_s = np.zeros(37359783)
+        index=0
+        #camera = Camera(50,8,375,128)
+        #display = Display(5,0.078,128,12)
+        Vs = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
+        Us = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
+        
+        
+        us, vs =np.meshgrid(Us,Vs)
+        Z = np.zeros(np.shape(us))               
+        Z [us**2 + vs**2 < (self.camera.aperture()/2)**2 ] = 1
+        HBVals = self.angular.Angular_BoundaryExt2()
+        #VBVals = self.angular.Angular_BoundaryExt2()
+        
+      
+        #BackwardTransport(self.Epsilon_y, HBVals, display, camera, Vs, self.Do, self.angular.XtraPix)
+        #BackwardTransport(self.Epsilon_x, VBVals, display, camera, Us, self.Do, self.angular.XtraPix)
+        print('start y-v backward transport')
+        Yo, Vo = self.Backward.BackwardTransportExt3()
+
+        print('start x-u backward transport')
+        Xo, Uo = self.Backward.BackwardTransportExt3()
+        ''''''
+        Xo[Xo < 1] = 1    
+        Xo[Xo > display.resolution()] = display.resolution()
+        Yo[Yo < 1] = 1    
+        Yo[Yo > display.resolution()] = display.resolution()
+        
+        print('start sampling and build projection matrix')
+        for j in range(0,self.camera.resolution):
+           #print('Progress = %3.0f %%', j/self.camera.resolution*100)
+            for i in range(0,self.camera.resolution):
+
+                xo, yo = np.meshgrid(Yo[:,j], Xo[:,i])          
+                pixels = np.array([yo.reshape(-1),xo.reshape(-1)]).transpose()
+                uo, vo = np.meshgrid(Uo[:,j] , Vo[:,i])
+                angles = np.array([vo.reshape(-1),uo.reshape(-1)]).transpose()
+        
+                
+                samples = np.concatenate([pixels, angles],1)
+                
+                samples = samples[Z.reshape(-1) != 0,:]
+            
+                w = np.shape(samples)[0]
+                b, n= np.unique(samples,return_index= True,axis = 0)
+                X0 = np.ones((len(n),1))
+                CELL =np.concatenate([b, X0],1)   
+                Angular_Res=5
+                Angular_VRes=Angular_Res
+                Angular_HRes=Angular_Res
+                
+                
+                for r in range(0,b.shape[0]):
+                    index0 = i * self.camera.resolution + j
+                    index1 = ((CELL[r,1]-1) * self.display.resolution() + (CELL[r,0]-1)) * Angular_VRes*Angular_HRes
+                    index2 = (CELL[r,3]-1) * Angular_VRes + CELL[r,2]-1
+                    ind_r[index] = index0+1
+                    ind_c[index] = index1+index2+1
+                    val_s[index] = CELL[r,4]/w 
+                    index = index + 1
+        #aa = np.concatenate([ind_r, ind_c],1) 
+        #aaa = np.concatenate([aa,val_s],1)        
+        print(ind_r.shape)   
+        print(ind_c.shape)  
+        print(val_s.shape)  
+        print('start making sparse system matrix')
+        A = sparse.coo_matrix((val_s,(ind_r,ind_c)),(self.camera.resolution**2,self.display.resolution()**2 * 25)).toarray()
+       #(37359783,self.display.resolution()**2 * 25)
+        return A
+        
 class CompositeRGB:
 
     def __init__(self,num,MAX,GAMMA):

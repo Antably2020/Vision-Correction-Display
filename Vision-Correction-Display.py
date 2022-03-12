@@ -6,7 +6,7 @@ import cv2
 from scipy import sparse
 
 class Display:
-    def _init_(self,Angular_HRes,screen_pixel_pitch,screen_pixels,padding,depth):
+    def __init__(self,Angular_HRes,screen_pixel_pitch,screen_pixels,padding,depth):
         self.Angular_HRes=Angular_HRes
         self.screen_pixel_pitch=screen_pixel_pitch
         self.screen_pixels=screen_pixels
@@ -51,7 +51,7 @@ class Camera:
         return x; 
 
 class Camera2Screen:
-    def _init_(self,X,Y,Do,f,Di):
+    def __init__(self,X,Y,Do,f,Di):
         self.f=f # focal length
         self.X=X
         self.Y=Y
@@ -71,7 +71,7 @@ class Camera2Screen:
         return x,y 
 
 class Angular_Boundary:
-        def _init_(self,nView, SPP, Depth, XtraPix):
+        def __init__(self,nView, SPP, Depth, XtraPix):
             self.nView = nView
             self.SPP = SPP
             self.Depth = Depth

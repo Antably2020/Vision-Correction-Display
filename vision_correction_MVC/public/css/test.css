@@ -1,0 +1,226 @@
+body{
+    background-image: url("PAPERTEXTURE.jpg");
+    background-repeat:no-repeat; 
+    background-position:center; 
+    background-size: cover;
+    
+  }
+  
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+html,body{
+    width: 100%;
+    height: 100%;
+    font-family: 'Yusei Magic', sans-serif;
+}
+.wrapper{
+    width: 100%;
+    min-height: calc(100% - 60px);
+    padding:5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.question-body{
+    font-size:30px;
+    text-align: center;
+    max-width: 800px;
+    width:100%;
+}
+
+.answers{
+    margin-top:20px;
+}
+
+.answers .item{
+    font-size: 20px;
+    border: 5px solid black;
+    color: black;
+    border-radius: 0px;
+    width: 100%;
+    padding: 20px 20px;
+    padding-left: 50px;
+    margin-top: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color .4s;
+}
+
+.answers .item::before{
+    content:"";
+    position: absolute;
+    width:15px;
+    height:15px;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    background:white;
+    border: 5px solid black;
+    border-radius: 0%;
+    transition: background-color .4s;
+}
+
+.answers .item.selected{
+    background: rgb(74 82 73 / 39%);
+}
+.answers .item.selected::before{
+    background: rgb(0 0 0);
+}
+
+
+.item::after{
+    content:"";
+    position: absolute;
+    top:0;
+    left:0;
+    background-image: url("http://upload.wikimedia.org/wikipedia/commons/0/0e/Ski_trail_rating_symbol-green_circle.svg");
+    background-position: center center;
+    opacity:0.1;
+    background-repeat: no-repeat;
+    background-size: 0 0;
+    height: 100%;
+    width: 100%;
+    transition: .3s ease-in;
+}
+.item:hover{
+    background: rgb(74 82 73 / 59%);
+}
+.item:hover::after {
+    background-size: 800px 800px;
+}
+
+#footer{
+    text-align:center;font-size:13px;
+    background: rgb(74 82 73 / 39%);
+    padding:20px;
+    display:flex;
+    align-items: center;
+    justify-content:  center;
+}
+#footer .heart-icon{
+    width:20px;
+    height:20px;
+    margin:0 10px;
+    opacity:0.9;
+}
+
+.xbutton{
+    background-color: #000;
+    color:white;
+    border-radius: 5px;
+    padding:10px 40px;
+    display: table;
+    margin:20px 0;
+    float:right;
+    cursor: pointer;
+    opacity: 0.9;
+}
+.xbutton:hover{
+    opacity:1;
+}
+.xbutton.disabled{
+    cursor: not-allowed;
+    background: #888;
+}
+.xbutton img{
+    width:10px;
+}
+
+.loading{
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background:rgba(255,255,255);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size:25px;
+    display:none;
+}
+.loading.show{
+    display:flex;
+}
+
+#main-body{
+    display:none;
+}
+.flex{
+    display: flex;
+}
+.flex.f-wrap{
+    flex-wrap: wrap;
+}
+.flex.al-c{
+    align-items: center;
+}
+.flex.j-c{
+    justify-content: center;
+}
+.name-entering{
+    width:100%;
+}
+.main-input{
+    height:45px;
+    width:500px;
+    max-width: 70%;
+    background-color:rgba(255, 253, 253, 0);
+    border-radius: 0px;
+    border:2px solid black;
+    padding:10px;
+}
+.mr-10{
+    margin-right: 10px;
+}
+
+#result-body{
+    text-align: center;
+    display: none;
+}
+#result-body .congrats{
+    color:black;
+    font-size:25px;
+    font-weight: bold;
+}
+
+#result-body #result-description{
+    max-width: 800px;
+    width:90%;
+    text-align: center;
+    margin:0 auto;
+    font-size: 20px;
+}
+#result-body #result-image{
+    width:250px;
+    height:250px;
+    object-fit: contain;
+    object-position: 50% 50%;
+}
+.logo{
+    width:150px;
+    height:150px;
+    margin:30px auto
+}
+.logo img{
+    width:100%;
+    height: 100%;
+}
+.facebook-sharer{
+    width:300px;
+    height: 40px;
+    background-image:url('../png/facebook-share.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin:30px auto
+}

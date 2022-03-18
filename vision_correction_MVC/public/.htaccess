@@ -1,0 +1,12 @@
+ Options -Indexes
+<IfModule mod_rewrite.c>
+  Options -Multiviews
+  RewriteEngine On
+  RewriteBase /Vision-Correction-Display/vision_correction_MVC/public
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule  ^(.+)$ index.php?url=$1 [QSA,L]
+  
+
+ 
+</IfModule>

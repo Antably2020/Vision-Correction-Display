@@ -56,6 +56,65 @@ class Users extends Controller
         $view = new Register($this->getModel(), $this);
         $view->output();
     }
+
+    public function addeyeinputs()
+    {   
+        $eyeinputsModel = $this->getModel();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Process form
+            $eyeinputsModel->setFocal(trim($_POST['focal']));
+            $eyeinputsModel->setFocus(trim($_POST['focus']));
+            $eyeinputsModel->setDo(trim($_POST['do']));
+            $eyeinputsModel->setFstop(trim($_POST['fstop']));
+            $eyeinputsModel->setConfirmPassword(trim($_POST['resolution']));
+            $eyeinputsModel->setDtype(trim($_POST['dtype']));
+
+            //validation
+            
+            if (empty($eyeinputsModel->getFocal())) {
+                $eyeinputsModel->setFocalErr('Please focal length');
+            }
+            if (empty($eyeinputsModel->getFocus())) {
+                $eyeinputsModel->setFocusErr('Please enter focus');
+            }
+            if (empty($eyeinputsModel->getDo())) {
+                $eyeinputsModel->setDoErr('Please enter Do');
+            }
+            if (empty($eyeinputsModel->getFstop())) {
+                $eyeinputsModel->setFstopsErr('Please enter Fstop');
+            }
+            if (empty($eyeinputsModel->getResolution())) {
+                $eyeinputsModel->setResolutionErr('Please enter Resolution');
+            }
+            if (empty($eyeinputsModel->getDtype())) {
+                $eyeinputsModel->setDtyprErr('Please enter Device Type');
+            }
+           
+
+            if (
+                empty($eyeinputsModel->getFocal()) &&
+                empty($eyeinputsModel->getFocus()) &&
+                empty($eyeinputsModel->getDo()) &&
+                empty($eyeinputsModel->getFstop())
+            ) {
+                //Hash Password
+                $eyeinputsModel->setFstop($_POST['fstop']);
+
+                if ($eyeinputsModel->addeyeinputs()) {
+                    header('location: ' . URLROOT . 'public/users/login');
+                } else {
+                    die('Error in sign up');
+                }
+            }
+        }
+        // Load form
+        //echo 'Load form, Request method: ' . $_SERVER['REQUEST_METHOD'];
+        $viewPath = VIEWS_PATH . 'users/eye_inputs.php';
+        require_once $viewPath;
+        $view = new Eyeinputs($this->getModel(), $this);
+        $view->output();
+    }
+
     public function login()
     {
         $userModel = $this->getModel();

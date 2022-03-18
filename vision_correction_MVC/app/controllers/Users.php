@@ -86,11 +86,11 @@ class Users extends Controller
                $_SESSION['ID']=$result->ID;
                if($t=='user')
                {
-                header('location: ' . URLROOT . 'public/pages/index');
+                header('location: ' . URLROOT . 'public/pages/Correctimage');
                }
                else if($t=='admin')
                {
-                header('location: ' . URLROOT . 'public/admin/dashboard');
+                header('location: ' . URLROOT . 'public/admin/Correctimage');
                }
 
             }

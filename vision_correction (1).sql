@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2022 at 02:57 PM
+-- Generation Time: Mar 20, 2022 at 11:18 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.20
 
@@ -59,30 +59,88 @@ CREATE TABLE `answers` (
 --
 
 INSERT INTO `answers` (`id`, `result_id`, `question_id`, `answer`) VALUES
-(1, 2, 1, 'Yes'),
-(2, 5, 1, 'No'),
-(3, 3, 2, 'Yes'),
-(4, 5, 2, 'No'),
-(5, 1, 3, 'Yes'),
-(6, 5, 3, 'No'),
-(7, 4, 4, 'Yes'),
-(8, 5, 4, 'No'),
-(9, 3, 5, 'Yes'),
-(10, 5, 5, 'No'),
-(11, 3, 6, 'Yes'),
-(12, 5, 6, 'No'),
-(13, 1, 7, 'Yes'),
-(14, 5, 7, 'No'),
-(15, 2, 8, 'Yes'),
-(16, 5, 8, 'No'),
-(17, 4, 9, 'Yes'),
-(18, 5, 9, 'No'),
-(19, 1, 10, 'Yes'),
-(20, 5, 10, 'No'),
-(21, 4, 11, 'Yes'),
-(22, 5, 11, 'No'),
-(23, 2, 12, 'Yes'),
-(24, 5, 12, 'No');
+(1, 1, 1, '12'),
+(2, 6, 1, 'nothing'),
+(3, 1, 2, '3'),
+(4, 6, 2, '8'),
+(5, 1, 3, '5'),
+(6, 6, 3, '6'),
+(7, 1, 4, '70'),
+(8, 6, 4, '29'),
+(9, 1, 5, '35'),
+(10, 6, 5, '57'),
+(11, 1, 6, '2'),
+(12, 6, 6, '5'),
+(13, 1, 7, '5'),
+(14, 6, 7, '3'),
+(15, 1, 8, '17'),
+(16, 6, 8, '15'),
+(17, 1, 9, '21'),
+(18, 6, 9, '74'),
+(19, 6, 10, '2'),
+(20, 1, 10, 'NOTHING'),
+(21, 1, 11, 'NOTHING'),
+(22, 6, 11, '6'),
+(23, 1, 12, 'NOTHING'),
+(24, 6, 12, '97'),
+(31, 1, 13, 'NOTHING'),
+(32, 6, 13, '45'),
+(33, 1, 14, 'NOTHING'),
+(34, 6, 14, '5'),
+(35, 1, 15, 'NOTHING'),
+(36, 6, 15, '7'),
+(37, 6, 16, '16'),
+(38, 1, 16, 'NOTHING'),
+(39, 6, 17, '73'),
+(40, 1, 17, 'NOTHING'),
+(41, 6, 18, 'NOTHING'),
+(42, 1, 18, '5'),
+(43, 6, 19, 'NOTHING'),
+(44, 1, 19, '2'),
+(45, 6, 20, 'NOTHING'),
+(46, 1, 20, '45'),
+(47, 6, 21, 'NOTHING'),
+(48, 1, 21, '73'),
+(49, 6, 22, '26'),
+(50, 2, 22, '6'),
+(51, 3, 22, '2'),
+(52, 6, 23, '42'),
+(53, 2, 23, '2'),
+(54, 3, 23, '4'),
+(55, 6, 24, '35'),
+(56, 2, 24, '5'),
+(57, 3, 24, '3'),
+(58, 6, 25, '96'),
+(59, 2, 25, '6'),
+(60, 3, 25, '9'),
+(61, 6, 26, 'Purple & Red Spots'),
+(62, 2, 26, 'Only Purple Line'),
+(63, 3, 26, 'Only Red Line'),
+(64, 6, 27, 'Purple & Red Spots'),
+(65, 2, 27, 'Only Purple Line'),
+(66, 3, 27, 'Only Red Line'),
+(67, 6, 28, 'Nothing'),
+(68, 1, 28, 'A Line'),
+(69, 6, 29, 'NOTHING'),
+(70, 1, 29, 'A Line'),
+(71, 6, 30, 'Blue-Green Line'),
+(72, 1, 30, 'Nothing'),
+(73, 6, 31, 'Blue-Green Line'),
+(74, 1, 31, 'Nothing'),
+(75, 6, 32, 'Orange Line'),
+(76, 1, 32, 'Nothing Or False Line'),
+(77, 6, 33, 'Orange Line'),
+(78, 1, 33, 'Nothing Or False Line'),
+(79, 6, 34, 'Blue-Green and Yellow Line'),
+(80, 1, 34, 'Only Red-Green and Violet line '),
+(81, 6, 35, ' blue-green and yellow-green line '),
+(82, 1, 35, 'only blue-green and violet line '),
+(83, 6, 36, 'violet and orange line'),
+(84, 1, 36, 'blue-green and violet line '),
+(85, 6, 37, 'violet and orange line '),
+(86, 1, 37, 'blue-green and violet line '),
+(87, 6, 38, 'A line'),
+(88, 6, 38, 'Nothing');
 
 -- --------------------------------------------------------
 
@@ -145,6 +203,30 @@ CREATE TABLE `contact` (
   `complain` varchar(50) NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `eyeinputs`
+--
+
+CREATE TABLE `eyeinputs` (
+  `ID` int(11) NOT NULL,
+  `focal` varchar(255) NOT NULL,
+  `focus` varchar(255) NOT NULL,
+  `do` varchar(255) NOT NULL,
+  `fstop` varchar(255) NOT NULL,
+  `resolution` varchar(255) NOT NULL,
+  `dtype` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `eyeinputs`
+--
+
+INSERT INTO `eyeinputs` (`ID`, `focal`, `focus`, `do`, `fstop`, `resolution`, `dtype`) VALUES
+(1, 'dcd', 'dd', 'dv', 'dv', 'dv', 'dvd'),
+(2, 'dcd', 'dd', 'dv', 'dv', 'dv', 'dvd');
 
 -- --------------------------------------------------------
 
@@ -220,18 +302,44 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `question`) VALUES
-(1, 'this is question 1'),
-(2, 'this is question 2'),
-(3, 'this is question 3'),
-(4, 'this is question 4'),
-(5, 'this is question 5'),
-(6, 'this is question 6'),
-(7, 'this is question 7'),
-(8, 'this is question 8'),
-(9, 'this is question 9'),
-(10, 'this is question 10'),
-(11, 'this is question 11'),
-(12, 'this is question 12');
+(1, 'plate1.jpg'),
+(2, 'plate2.jpg'),
+(3, 'plate3.jpg'),
+(4, 'plate4.jpg'),
+(5, 'plate5.jpg'),
+(6, 'plate6.jpg'),
+(7, 'plate7.jpg'),
+(8, 'plate8.jpg'),
+(9, 'plate9.jpg'),
+(10, 'plate10.jpg'),
+(11, 'plate11.jpg'),
+(12, 'plate12.jpg'),
+(13, 'plate13.jpg'),
+(14, 'plate14.jpg'),
+(15, 'plate15.jpg'),
+(16, 'plate16.jpg'),
+(17, 'plate17.jpg'),
+(18, 'plate18.jpg'),
+(19, 'plate19.jpg'),
+(20, 'plate20.jpg'),
+(21, 'plate21.jpg'),
+(22, 'plate22.jpg'),
+(23, 'plate23.jpg'),
+(24, 'plate24.jpg'),
+(25, 'plate25.jpg'),
+(26, 'plate26.jpg'),
+(27, 'plate27.jpg'),
+(28, 'plate28.jpg'),
+(29, 'plate29.jpg'),
+(30, 'plate30.jpg'),
+(31, 'plate31.jpg'),
+(32, 'plate32.jpg'),
+(33, 'plate33.jpg'),
+(34, 'plate34.jpg'),
+(35, 'plate35.jpg'),
+(36, 'plate36.jpg'),
+(37, 'plate37.jpg'),
+(38, 'plate38.jpg');
 
 -- --------------------------------------------------------
 
@@ -251,11 +359,12 @@ CREATE TABLE `results` (
 --
 
 INSERT INTO `results` (`id`, `name`, `description`, `image`) VALUES
-(1, 'first color blindness problem', 'this is a description on your vision problem that shoud be resolved by the color blindness algorithm', 'humanities.png'),
-(2, 'second color blindness problem', 'this is a description on your vision problem that shoud be resolved by the color blindness algorithm', 'philosophy.png'),
-(3, 'third color blindness problem', 'this is a description on your vision problem that shoud be resolved by the color blindness algorithm', 'entrepreneurship.png'),
+(1, 'Red-Green Deficiency', 'this is a description on your vision problem that shoud be resolved by the color blindness algorithm', 'humanities.png'),
+(2, 'Protanopia', 'this is a description on your vision problem that shoud be resolved by the color blindness algorithm', 'philosophy.png'),
+(3, 'deutranopia', 'this is a description on your vision problem that shoud be resolved by the color blindness algorithm', 'entrepreneurship.png'),
 (4, 'fourth color blindness problem', 'this is a description on your vision problem that shoud be resolved by the color blindness algorithm', 'psychology.png'),
-(5, 'None', '........', '..............');
+(5, 'Normal', 'Youre Normal', 'psychology.png'),
+(6, 'Normal', 'Youre Normal', 'psychology.png');
 
 -- --------------------------------------------------------
 
@@ -323,6 +432,12 @@ ALTER TABLE `contact`
   ADD KEY `email` (`email`);
 
 --
+-- Indexes for table `eyeinputs`
+--
+ALTER TABLE `eyeinputs`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -364,7 +479,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -377,6 +492,12 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `contact`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `eyeinputs`
+--
+ALTER TABLE `eyeinputs`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -394,13 +515,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `results`
 --
 ALTER TABLE `results`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

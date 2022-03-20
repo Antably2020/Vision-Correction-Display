@@ -5,7 +5,7 @@
 
   <div class="text-center p-3" style="background-color: #000000;">
     © 2021 Copyright:
-    <a class="text-white" href="https://website .com/">vision_correction</a>
+    <a class="text-white" href="">vision_correction</a>
   </div>
 
 </footer>

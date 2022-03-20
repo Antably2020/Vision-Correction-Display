@@ -29,8 +29,10 @@
                 Question <span id="question-number">1</span>:
 
             </h1>
-            <div class="question-body" id="question-body">
-                Loading...
+           <!-- <div class="question-body" id="question-body">-->
+            <div class=" question-image" id="question-body">
+            <img id="question-image" src="">
+              <!--   Loading.....-->
             </div>
             <div class="answers" id="answers-container">
                 

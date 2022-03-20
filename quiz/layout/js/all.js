@@ -80,7 +80,8 @@ function getQuestion(){
                 getResults();
                 return;
             }
-            document.getElementById('question-body').innerHTML = response['question'];
+              document.getElementById('question-image').setAttribute('src',"layout/png/"+response['question']);
+            //document.getElementById('question-body').innerHTML = response['question'];
             response['answers'].forEach(element => {
                 var el = document.createElement('div');
                 el.classList.add('item');

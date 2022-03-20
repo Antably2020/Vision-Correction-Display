@@ -20,9 +20,10 @@ $result_description = $result_details['description'];
     <meta property="og:title" content="<?php echo explode(" ",$name)[0]?>'s problem is <?php echo $result_name ?>. Take The Test Now!" />
     <meta property="og:description" content="<?php echo $result_description; ?>" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://campaignersmiu.com/quiz/result/<?php echo explode(" ",$name)[0];?>/<?php echo $_GET['result'];?>" />
-    <meta property="og:image" content="https://campaignersmiu.com/quiz/layout/png/fb_share_<?php echo 
-strtolower($result_name); ?>.png" />
+    <meta property="og:url" content="https://campaignersmiu.com/vision-test/result/<?php echo explode(" ",$name)[0];?>/<?php echo $_GET['result'];?>" />
+    <meta property="og:image" content="https://campaignersmiu.com/vision-test/layout/png/logo.png" />
+    <!--<meta property="og:image" content="https://campaignersmiu.com/vision-test/layout/png/fb_share_<?php echo 
+strtolower($result_name); ?>.png" />-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/quiz/layout/css/master.css">
@@ -37,7 +38,7 @@ strtolower($result_name); ?>.png" />
             <div class="congrats">
                 <?php echo $name?> took the quiz. <br>Take yours now!
             </div>
-            <a href="./" style="text-decoration:none;"><div style="float:inherit;margin:50px auto;" class="xbutton">Start Quiz</div></a>
+            <a hhref="./" style="text-decoration:none;"><div style="float:inherit;margin:50px auto;" class="xbutton">Start Quiz</div></a>
         </div>
     </div>
     <div id="footer">

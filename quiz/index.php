@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
     <link href="layout/css/test.css" rel="stylesheet">
-    <meta name="og:image" content="https://www.campaignersmiu.com/quiz/layout/png/Campaigners_school_quiz.jpg">
+    <meta name="og:image" content="https://www.campaignersmiu.com/quiz/layout/png/logo.png">
     <meta name="og:title" content="Take the Quiz Now!">
     <meta name="og:description" content="color blindness test">
     <title>color blindness test</title>
@@ -50,9 +50,8 @@
             <p id="result-description"></p>
 <br>
             <a href="reset.php" style="text-decoration:none;"><div class="xbutton" style="font-size:20px;float:inherit;margin:0 auto;margin-top:10px;">Try Again</div></a>
-            <a href="https://www.instagram.com/campaignersmiu/" class="" ><div class="xbutton" style="font-size:20px;float:inherit;margin:0 auto;margin-top:10px;">instagram</div></a>
             
-            <a id="facebook_sharer" href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
+            <a hidden id="facebook_sharer" href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
             <div class="xbutton" style="font-size:20px;float:inherit;margin:0 auto;margin-top:10px;">Facebook</div>
             </a>
             

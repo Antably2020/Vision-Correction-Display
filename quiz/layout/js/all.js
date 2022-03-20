@@ -36,6 +36,7 @@ if(nameButton){
     })
 }
 
+
 function answersEventHandler(){
     var answers = document.querySelectorAll('.answers .item');
     for(let i = 0; i<answers.length; i++){
@@ -80,7 +81,7 @@ function getQuestion(){
                 getResults();
                 return;
             }
-              document.getElementById('question-image').setAttribute('src',"layout/png/"+response['question']);
+              document.getElementById('question-image').setAttribute('src',"layout/testimg/"+response['question']);
             //document.getElementById('question-body').innerHTML = response['question'];
             response['answers'].forEach(element => {
                 var el = document.createElement('div');

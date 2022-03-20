@@ -1,10 +1,5 @@
-body{
-    background-image: url("../png/PAPERTEXTURE.jpg");
-    background-repeat:no-repeat; 
-    background-position:center; 
-    background-size: cover;
-    
-  }
+
+  
   
 
 *{
@@ -17,6 +12,10 @@ html,body{
     width: 100%;
     height: 100%;
     font-family: 'Yusei Magic', sans-serif;
+        background-image: url("../png/PAPERTEXTURE.jpg");
+    background-repeat:no-repeat; 
+    background-position:center; 
+    background-size: cover;
 }
 .wrapper{
     width: 100%;
@@ -25,6 +24,11 @@ html,body{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: url("../png/PAPERTEXTURE.jpg");
+    background-repeat:no-repeat; 
+    background-position:center; 
+    background-size: cover;
+    
 }
 
 
@@ -40,14 +44,13 @@ html,body{
 }
 
 .answers .item{
-    font-size: 20px;
-    border: 5px solid black;
-    color: black;
-    border-radius: 0px;
-    width: 100%;
-    padding: 20px 20px;
-    padding-left: 50px;
-    margin-top: 10px;
+    font-size:20px;
+    border:5px solid black;
+    color:black;
+    width:100%;
+    padding:20px 20px;
+    padding-left:50px;
+    margin-top:10px;
     position: relative;
     cursor: pointer;
     transition: background-color .4s;
@@ -62,16 +65,15 @@ html,body{
     top:50%;
     transform:translateY(-50%);
     background:white;
-    border: 5px solid black;
-    border-radius: 0%;
+    border:5px solid black;
     transition: background-color .4s;
 }
 
 .answers .item.selected{
-    background: rgb(74 82 73 / 39%);
+    background:rgba(0, 0, 0, 0.3);
 }
 .answers .item.selected::before{
-    background: rgb(0 0 0);
+    background:rgb(0, 0, 0);
 }
 
 
@@ -80,7 +82,7 @@ html,body{
     position: absolute;
     top:0;
     left:0;
-    background-image: url("http://upload.wikimedia.org/wikipedia/commons/0/0e/Ski_trail_rating_symbol-green_circle.svg");
+    background-image: url("../svg/Ski_trail_rating_symbol-green_circle.svg");
     background-position: center center;
     opacity:0.1;
     background-repeat: no-repeat;
@@ -90,7 +92,7 @@ html,body{
     transition: .3s ease-in;
 }
 .item:hover{
-    background: rgb(74 82 73 / 59%);
+    background:rgba(0, 0, 0, 0.408);
 }
 .item:hover::after {
     background-size: 800px 800px;
@@ -98,7 +100,7 @@ html,body{
 
 #footer{
     text-align:center;font-size:13px;
-    background: rgb(74 82 73 / 39%);
+    color:rgb(0, 0, 0);
     padding:20px;
     display:flex;
     align-items: center;
@@ -139,7 +141,7 @@ html,body{
     height:100%;
     top:0;
     left:0;
-    background:rgba(255,255,255);
+    background:rgba(0, 0, 0, 0.381);
     z-index: 999;
     display: flex;
     align-items: center;
@@ -174,9 +176,8 @@ html,body{
     height:45px;
     width:500px;
     max-width: 70%;
-    background-color:rgba(255, 253, 253, 0);
-    border-radius: 0px;
-    border:2px solid black;
+    border-radius: 5px;
+    border:1px solid rgb(0, 0, 0);
     padding:10px;
 }
 .mr-10{
@@ -188,7 +189,7 @@ html,body{
     display: none;
 }
 #result-body .congrats{
-    color:black;
+    color:rgb(0, 0, 0);
     font-size:25px;
     font-weight: bold;
 }

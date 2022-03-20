@@ -1,7 +1,7 @@
 Options -Indexes
 RewriteEngine On
 
-Redirect 301 /reset.php http://localhost/Vision-Correction-Display/quiz/index.php
+
 RewriteRule ^result/([a-zA-z0-9]+)/([0-9]+)/?$ result.php?name=$1&result=$2 [NC]
 
 RewriteCond %{REQUEST_FILENAME}.php -f
@@ -9,3 +9,4 @@ RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
 
 RewriteCond %{THE_REQUEST} ^(GET|HEAD)\ /([^/]+)\.php(\?|\ |$)
 RewriteRule ^ /%2/ [L,R=301]
+Redirect 301 /reset.php http://localhost/Vision-Correction-Display/quiz/index.php

@@ -34,8 +34,10 @@
             <img id="question-image" src="">
               <!--   Loading.....-->
             </div>
-            <div class="answers" id="answers-container">
-                
+           <!--   <div class="answers" id="answers-container">-->
+
+            <div class="answers" id="answers-container">  
+              
             </div>
             <div class="xbutton" id="nextButton" onclick="nextQuestion(this);">Next <img src="layout/svg/right-arrow.svg" alt=""></div>
         </div>
@@ -60,9 +62,7 @@
             </div>
         </div>
     </div>
-    <div id="footer">
-      
-    </div>
+ 
     <script src="layout/js/all.js"></script>
 </body>
 </html>

@@ -44,7 +44,7 @@
         <div id="result-body">
             <img id="result-image" src="">
             <div class="congrats">
-                <span id="username"></span>, Your character is
+                <span id="username"></span>, Your Color blindness issue is:
             </div>
             <h1 id="result-name"></h1>
             <p id="result-description"></p>

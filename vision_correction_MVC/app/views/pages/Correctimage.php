@@ -1,3 +1,5 @@
+
+<html>
 <?php 
 class correctimage extends view{
 
@@ -36,46 +38,44 @@ class correctimage extends view{
 </script>
 </head>
 <body>
-<div id="outer">
 
-    <div class="upload-container" >
-        <input accept="image/*" type="file" id="file_upload" onchange="loadFile(event)" multiple />
+<form method="post" action="Correctimage" enctype="multipart/form-data">
+<div id="outer">
+      <div class="upload-container" >
+        <input accept="image/*" type="file" autocomplete="off"  name="file" id="file_upload" onchange="loadFile(event)" multiple required />
      
     </div>
-    
-    <br></div>
+    </div>
     <div class="row" style=" padding-top: 50px; ">
 		<div class="col-md-12">
     <img  id="output" width=100px/>
 </div></div>
     <div class="row"  style=" padding-top: 20px; ">
 		<div class="col-md-12">
-    <button class="upload-btn login-btn"  onclick="uploadFiles()">Submit</button>  
-</div></div>
-
-<form method="post" action="Correctimage.php" enctype="multipart/form-data">
-		<p>
-			<input type="file" name="file" autocomplete="off" required>
-		</p>
-    <p>
-		<input type="submit" value="Submit">
-	</p>
+		<input type="submit" class="upload-btn login-btn"  onclick="uploadFiles()" value="Submit">
+    </div></div>
 </form>
 
-{% if filename %}
-
-  <div class="row">
+{% 
+  if filename
+%}
+<div class="row">
 		<div class="col-md-12">
                 			<a href="">
                       <img  class="view-img" src="{{ url_for('static', filename='/Images/'+filename) }}" alt="Image" style="width: 500px;">
 								</div></div>
-{% else %}
+{% 
+  else 
+%}
                 <div class="row">
 		<div class="col-md-12">
                 			<a href="">
                       <img  class="view-img" src="<?php echo URLROOT . 'images/logo.png'; ?>" alt="Logo" style="width: 500px;">
 								</div></div>
-{% endif %}              
+                <% end %>
+{%
+  endif 
+%}              
 </body>
 
 
@@ -85,3 +85,4 @@ class correctimage extends view{
   }
 }
 ?>
+</html>

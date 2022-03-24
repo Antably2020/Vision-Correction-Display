@@ -53,13 +53,29 @@ class correctimage extends view{
     <button class="upload-btn login-btn"  onclick="uploadFiles()">Submit</button>  
 </div></div>
 
+<form method="post" action="Correctimage.php" enctype="multipart/form-data">
+		<p>
+			<input type="file" name="file" autocomplete="off" required>
+		</p>
+    <p>
+		<input type="submit" value="Submit">
+	</p>
+</form>
 
+{% if filename %}
+
+  <div class="row">
+		<div class="col-md-12">
+                			<a href="">
+                      <img  class="view-img" src="{{ url_for('static', filename='/Images/'+filename) }}" alt="Image" style="width: 500px;">
+								</div></div>
+{% else %}
                 <div class="row">
 		<div class="col-md-12">
                 			<a href="">
                       <img  class="view-img" src="<?php echo URLROOT . 'images/logo.png'; ?>" alt="Logo" style="width: 500px;">
 								</div></div>
-              
+{% endif %}              
 </body>
 
 

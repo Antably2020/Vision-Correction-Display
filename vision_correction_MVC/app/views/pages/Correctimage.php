@@ -8,8 +8,9 @@ class correctimage extends view{
     require APPROOT . '/views/inc/header.php';
     echo breadcrumbs(); 
  ?>
- 
+   
  <head>
+ <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 <meta name="viewport" content="width=device-width, initial-scale=1">    
 
 <script>
@@ -39,7 +40,7 @@ class correctimage extends view{
 </head>
 <body>
 
-<form method="post" action="Correctimage" enctype="multipart/form-data">
+<form method="post" action="" enctype="multipart/form-data">
 <div id="outer">
       <div class="upload-container" >
         <input accept="image/*" type="file" autocomplete="off"  name="file" id="file_upload" onchange="loadFile(event)" multiple required />
@@ -62,7 +63,7 @@ class correctimage extends view{
 <div class="row">
 		<div class="col-md-12">
                 			<a href="">
-                      <img  class="view-img" src="{{ url_for('static', filename='/Images/'+filename) }}" alt="Image" style="width: 500px;">
+                      <img  class="view-img" src="{{ url_for('static', filename='Images/'+filename) }}" alt="Image" style="width: 500px;">
 								</div></div>
 {% 
   else 
@@ -70,7 +71,7 @@ class correctimage extends view{
                 <div class="row">
 		<div class="col-md-12">
                 			<a href="">
-                      <img  class="view-img" src="<?php echo URLROOT . 'images/logo.png'; ?>" alt="Logo" style="width: 500px;">
+                      <img  class="view-img" src="{{ url_for('static', filename='Images/logo.png') }}" alt="Logo" style="width: 500px;">
 								</div></div>
                 <% end %>
 {%

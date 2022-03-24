@@ -5,13 +5,14 @@ from recolor import Core
 app = Flask(__name__,template_folder= "../views/pages",static_folder="../views/static")
 
 
-app.config["IMAGE_UPLOADS"] = "C:/xampp2/htdocs/Vision-Correction-Display/vision_correction_MVC/app/views/static/Images"
+app.config["IMAGE_UPLOADS"] = "C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/views/static/Images"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG","JPG","JPEG"]
 
 from werkzeug.utils import secure_filename
 
 
-@app.route('/home',methods = ['POST' , "GET"])
+@app.route('/',methods = ['POST' , "GET"])
+
 def upload_image():
 	
 	if request.method == "POST":

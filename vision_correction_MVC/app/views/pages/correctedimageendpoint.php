@@ -37,70 +37,46 @@ class correctimage extends view{
     document.getElementById('imageBox').src = filenames ;
   };
 </script>
-<script>
-function runScript() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (request.readyState === 4) {
-            if (request.status === 200) {
-                alert('Successful .... ' + request.responseText);
-            } else {
-                alert('Something went wrong, status was ' + request.status);
-            }
-        }
+
+
+<script type="text/javascript">
+    document.getElementById("myButton").onclick = function () {
+        location.href = "http://localhost:80/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage";
     };
-    request.open('POST', 'C:\xampp\htdocs\Vision-Correction-Display\vision_correction_MVC\app\controllers\testAPI.py', true);
-    request.send(null);
-    return false;  
-};
-
-
-document.getElementById('script-button').onclick = runScript;
 </script>
 </head>
 <body>
 
-<form method="post" action="http://127.0.0.1:5000/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage" enctype="multipart/form-data">
-<div id="outer">
-      <div class="upload-container" >
-        <input accept="image/*" type="file" autocomplete="off"  name="file" id="file_upload" onchange="loadFile(event)" multiple required />
-     
-    </div>
-    </div>
-    <div class="row" style=" padding-top: 50px; ">
-		<div class="col-md-12">
-    <img  id="output" width=100px/>
-</div></div>
-    <div class="row"  style=" padding-top: 20px; ">
-		<div class="col-md-12">
-		<input type="submit" class="upload-btn login-btn"  onclick="uploadFiles()" value="Submit">
-    </div></div>
-</form>
-<!--
+
 {% 
   if filename
 %}
 <div class="row">
 		<div class="col-md-12">
-                			<a href="">
+                			<a href="http://localhost:80/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage">
                       <img  class="view-img" src="{{ url_for('static', filename='Images/'+filename) }}" alt="Image" style="width: 500px;">
 								</div></div>
+                            
+
 {% 
   else 
 %}
                 <div class="row">
 		<div class="col-md-12">
-                			<a href="">
+                			<a href="http://localhost:80/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage">
                       <img  class="view-img" src="{{ url_for('static', filename='Images/logo.png') }}" alt="Logo" style="width: 500px;">
 								</div></div>
+                    
                 <% end %>
 {%
   endif 
-%}        
--->
+%}           
 
+<div class="row">
+		<div class="col-md-12">
+                                <button id="myButton"  class="upload-btn login-btn" >TRY AGAIN</button>
+                                </div></div>
 </body>
-
 
  <?php
   require APPROOT . '/views/inc/footer.php';

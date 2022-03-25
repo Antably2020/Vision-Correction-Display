@@ -11,7 +11,7 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG","JPG","JPEG"]
 from werkzeug.utils import secure_filename
 
 
-@app.route('/',methods = ['POST' , "GET"])
+@app.route('/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage',methods = ['POST' , "GET"])
 
 def upload_image():
 	
@@ -33,11 +33,11 @@ def upload_image():
                  protanopia_degree=0.9,
                  deutranopia_degree=0.9)
 
-		return render_template("Correctimage.php",filename=filename)
+		return render_template("correctedimageendpoint.php",filename=filename)
 		
-	return render_template('Correctimage.php')
+	return render_template('correctedimageendpoint.php')
 
 
 
 
-app.run(debug=True,port=80)
+app.run(debug=True,port=5000)

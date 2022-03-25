@@ -25,7 +25,7 @@ class correctimage extends view{
         for(var i=0;i<files.length;i++){
             filenames+=files[i].name+"\n";
         }
-        alert("Selected file(s) :\n____________________\n"+filenames);
+      //  alert("Selected file(s) :\n____________________\n"+filenames);
     }
             
     var loadFile = function(event) {

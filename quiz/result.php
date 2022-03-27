@@ -42,7 +42,7 @@ strtolower($result_name); ?>.png" />-->
         </div>
     </div>
     <div id="footer">
-        Made by Campaigners' Personnel Team &copy; <?php echo date('Y');?>
+     
     </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <?php 
 class correctimage extends view{
 
-   
+  ?> 
  <head>
  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 <meta name="viewport" content="width=device-width, initial-scale=1">    

@@ -1,9 +1,24 @@
 
+<?php 
+$photo_result=null;
+function play(){
+    global $photo_result;
+    if(isset($_FILES['file'])){
+      $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+      move_uploaded_file($_FILES['file']['tmp_name'],$path);
+      $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py '.$path.' 2>&1');
+     
+    }
+  }
+     play();
+?>
 <html>
 <?php 
 class correctimage extends view{
 
   public function output(){
+    global $photo_result;
+
     $title = $this->model->title;
     require APPROOT . '/views/inc/header.php';
     echo breadcrumbs(); 
@@ -37,30 +52,13 @@ class correctimage extends view{
     document.getElementById('imageBox').src = filenames ;
   };
 </script>
-<script>
-function runScript() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (request.readyState === 4) {
-            if (request.status === 200) {
-                alert('Successful .... ' + request.responseText);
-            } else {
-                alert('Something went wrong, status was ' + request.status);
-            }
-        }
-    };
-    request.open('POST', 'C:\xampp\htdocs\Vision-Correction-Display\vision_correction_MVC\app\controllers\testAPI.py', true);
-    request.send(null);
-    return false;  
-};
 
 
-document.getElementById('script-button').onclick = runScript;
-</script>
+
 </head>
 <body>
 
-<form method="post" action="http://127.0.0.1:5000/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage" enctype="multipart/form-data">
+<form method="post" action="http://localhost/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage" enctype="multipart/form-data">
 <div id="outer">
       <div class="upload-container" >
         <input accept="image/*" type="file" autocomplete="off"  name="file" id="file_upload" onchange="loadFile(event)" multiple required />
@@ -73,9 +71,17 @@ document.getElementById('script-button').onclick = runScript;
 </div></div>
     <div class="row"  style=" padding-top: 20px; ">
 		<div class="col-md-12">
-		<input type="submit" class="upload-btn login-btn"  onclick="uploadFiles()" value="Submit">
+		<input type="submit" class="upload-btn login-btn"  onclick="runpy()uploadFiles()" value="Submit">
     </div></div>
 </form>
+<?php
+if(isset($_FILES['file'])){
+?>
+<div class="row">
+		<div class="col-md-12">
+                      <img  class="view-img" src="http://localhost/Vision-Correction-Display/vision_correction_MVC/images/tmp/<?php echo $photo_result;?>" alt="Image" style="width: 500px;">
+								</div></div>
+                <?php } ?>
 <!--
 {% 
   if filename
@@ -107,5 +113,43 @@ document.getElementById('script-button').onclick = runScript;
 
   }
 }
+
 ?>
+
+<?php 
+function runtestapi() {
+$command = "python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI.py 2>&1";
+$pid = popen( $command,"r");
+while( !feof( $pid ) )
+{
+ echo fread($pid, 256);
+ flush();
+ ob_flush();
+ usleep(100000);
+}
+pclose($pid);
+}
+?>
+
+
+<?php  
+
+function runpy() {
+
+$command = escapeshellcmd('C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI.py') ;
+$results = json_decode (exec ($command) , true) ; 
+}
+
+
+?>
+<script>  
+   <?php 
+    # runtestapi();
+    print (json_encode ($results)) ;?>
+    alert("done!");
+  
+</script> 
+
+
+
 </html>

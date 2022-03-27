@@ -80,13 +80,12 @@ class Core:
         :param save_path: Where to save the simulated file. Valid only if return_type is set as 'save'.
         """
 
-        img_rgb = Utils.load_rgb(input_path)
-
+        img_rgb = Utils.load_rgb(input_path)[:,:,:3]
         transform = Transforms.correction_matrix(protanopia_degree=protanopia_degree,
                                                  deutranopia_degree=deutranopia_degree)
 
         img_corrected = np.uint8(np.dot(img_rgb, transform) * 255)
-
+    
         if return_type == 'save':
             assert save_path is not None, 'No save path provided.'
             cv2.imwrite(save_path, img_corrected)

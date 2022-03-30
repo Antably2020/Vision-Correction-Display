@@ -9,12 +9,7 @@ class Pages extends Controller
         $indexView = new Index($this->getModel(), $this);
         $indexView->output();
     }
-
-
-
-
-
-    
+  
     public function correctimage()
 {
 
@@ -35,7 +30,6 @@ class Pages extends Controller
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $CorrectImageModel->setImage($photo_result);
          
-        //$path='C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/'.$_POST['img'];
       if (isset($input->post->form2)){
 
         
@@ -61,14 +55,6 @@ class Pages extends Controller
 
 
     
-        
-    public function products()
-    {
-        $viewPath = VIEWS_PATH . 'pages/products.php';
-        require_once $viewPath;
-        $productView = new products($this->getModel(), $this);
-        $productView->output();
-    }
 
     public function errorr()
     {

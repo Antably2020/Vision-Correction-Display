@@ -12,20 +12,21 @@
         }
         $i++;
     }
-    $heighestIndex++;
+    
     if($_SESSION['results'][0]>5)
     {
         switch(true)
         {
         case $_SESSION['results'][1]>$_SESSION['results'][2]:
             $heighestIndex = 2;
-            echo $heighestIndex;
             break;
         case $_SESSION['results'][1]<$_SESSION['results'][2]:
             $heighestIndex = 3;
-            echo $heighestIndex;
             break;
         }
+    }
+    else{
+        $heighestIndex++;
     }
     $results = DB::query("SELECT * FROM results WHERE id=:id",array(':id'=>$heighestIndex))[0];
     $object->username = $_SESSION['name'];

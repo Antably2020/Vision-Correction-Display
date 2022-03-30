@@ -10,8 +10,35 @@ class Pages extends Controller
         $indexView->output();
     }
 
+
+
+
+
+    
     public function correctimage()
-    {
+{
+    $CorrectImageModel = $this->getModel();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $CorrectImageModel->setImage(trim($_POST['Img']));
+         
+        //$path='C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/'.$_POST['img'];
+      if (isset($input->post->form2)){
+
+        
+      }
+       
+        if($CorrectImageModel->uploadhistory()){
+            echo '<script>';  
+            echo 'alert("image added!!!")';  
+            echo '</script>'; 
+        }
+        else{
+            die('Error has occured');
+        }
+
+
+    }
+    
         $viewPath = VIEWS_PATH . 'pages/Correctimage.php';
         require_once $viewPath;
         $correctimageView = new Correctimage($this->getModel(), $this);
@@ -19,7 +46,8 @@ class Pages extends Controller
     }
 
 
-
+    
+        
     public function products()
     {
         $viewPath = VIEWS_PATH . 'pages/products.php';
@@ -112,189 +140,32 @@ class Pages extends Controller
 
 
 
-    public function checkout(){
-        $checkoutModel = $this->getModel();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            //process form
-            if(isset($_POST['order']))
-            {
-                foreach($checkoutModel->readCart($_SESSION['ID']) as $product)
-                {
-            $checkoutModel->setname(trim($_POST['name']));
-            $checkoutModel->setemail(trim($_POST['email']));
-            $checkoutModel->setphone(trim($_POST['phone']));
-            $checkoutModel->setcity(trim($_POST['city']));
-            $checkoutModel->setaddress(trim($_POST['address']));
-            $checkoutModel->setstreet(trim($_POST['street']));
-            $checkoutModel->setbuilding(trim($_POST['building']));
-            $checkoutModel->setfloor(trim($_POST['floor']));
 
-            $checkoutModel->Checkout($product->productID);
-            $checkoutModel->deleteAllCart($product->id);
-                }
-
-                
-                echo'<script>alert("Order Added")</script>';
-            }
-        }
-
-
-        $viewPath=VIEWS_PATH. 'pages/checkout.php';
-        require_once $viewPath;
-        $checkoutView=new checkout($this->getModel(), $this);
-        $checkoutView->output();
-        /*if($checkoutModel->checkout()){
-            echo '<script>';  
-            echo 'alert("Order Placed successfully!!!")';  
-            echo '</script>'; 
-        }
-        else{
-            die('Error has occured');
-        }
-*/
-
-    }
-
-
-        
-    public function add_product(){
-        $add_producttModel = $this->getModel();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $path='images/'.$_POST['img'];
-            //process form
-            $add_producttModel->setName(trim($_POST['name']));
-            $add_producttModel->setDesc(trim($_POST['description']));
-            $add_producttModel->setoldPrice(trim($_POST['oldprice']));
-            $add_producttModel->setPrice(trim($_POST['price']));
-            $add_producttModel->setimage($path);
-            $add_producttModel->setFeatured(trim($_POST['featured']));
-            $add_producttModel->setCategory(trim($_POST['choice']));
-
-            if($add_producttModel->contactus()){
-                echo '<script>';  
-                echo 'alert("Item added successfully!!!")';  
-                echo '</script>'; 
-            }
-            else{
-                die('Error has occured');
-            }
-
-
-        }
-        $viewPath=VIEWS_PATH. 'admin/add_product.php';
-        require_once $viewPath;
-        $add_productView=new contact($this->getModel(),$this);
-        $add_productView->output();
-
-
-
-
-    }
-    public function cart()
-    {
-        
-        $cartModel = $this->getModel();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
-            $cartModel->readCart($_SESSION['ID']);
-            if(isset($_POST['del']))
-            {
-                $cartModel->deleteCartProduct($_POST['del']);
-                echo'<script>alert("Product Deleted")</script>';
-            }
-        }
-        // Load form
-        //echo 'Load form, Request method: ' . $_SERVER['REQUEST_METHOD'];
-        $viewPath = VIEWS_PATH . 'pages/cart.php';
-        require_once $viewPath;
-        $cartView = new Cart($this->getModel(), $this);
-        $cartView->output();
-        
-
-    }
-
-
-public function productdescription()
+public function image_history()
 {
-    $descModel = $this->getModel();
-    if(isset($_POST['addC'])){
-        if(isset($_SESSION['ID'])){
-        $quan=$_POST['quantity'];
-        $pri;
-        $PID=$_POST['addC'];
-        foreach ($descModel->readProd($PID) as $product){
-            $pri=$product->price;
-        }
-        $total=$quan*$pri;
-        if($descModel->addCart($PID,$quan,$total)){
-            
-            echo '<script> window.location = "products";
-            alert("ADDED TO CART!");
-          </script>';
-        }
-    }
-    else{
-                header('location: ' . URLROOT . 'public/users/login');
-
-    }
-
-    }
-
-    $viewPath = VIEWS_PATH . 'pages/ProductDescription.php';
-    require_once $viewPath;
-    $proddesc = new productdescription($this->getModel(), $this);
-    $proddesc->output();
-}
-
-public function categorizedProduct()
-{
-    $viewPath = VIEWS_PATH . 'pages/categorizedProduct.php';
-    require_once $viewPath;
-    $prodcat = new categorizedProduct($this->getModel(), $this);
-    $prodcat->output();
-}
-
-public function A_products()
-{
-    $A_productsModel = $this->getModel();
+    $image_historyModel = $this->getModel();
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
+        $image_historyModel->readhistory($_SESSION['ID']);
         //process form
         if(isset($_POST['del']))
             {
-                $A_productsModel->deleteProduct($_POST['del']);
-                echo'<script>alert("Product Deleted")</script>';
+                $image_historyModel->deleteimage($_POST['del']);
+                echo'<script>alert("Image Deleted")</script>';
             }
             
-            if(isset($_POST['edit']))
-            {
-                $A_productsModel->setPName(trim($_POST['name']));
-                $A_productsModel->setDescription(trim($_POST['desc']));
-                $A_productsModel->setPprice(trim($_POST['price']));
-
-                $A_productsModel->updateProduct($_POST['edit']);
-                echo'<script>alert("Product Updated")</script>';
-            }
+           
             
     }
 
     
-    $viewPath = VIEWS_PATH . 'admin/A_products.php';
+    $viewPath = VIEWS_PATH . 'pages/image_history.php';
     require_once $viewPath;
-    $adminView = new A_products($this->getModel(), $this);
+    $adminView = new image_history($this->getModel(), $this);
     $adminView->output();
 }
 
 
-public function A_orders()
-{
-    $viewPath = VIEWS_PATH . 'admin/A_orders.php';
-    require_once $viewPath;
-    $adminOrdersView = new A_orders($this->getModel(), $this);
-    $adminOrdersView->output();
-}
 public function A_Messages()
 {
     $viewPath = VIEWS_PATH . 'admin/A_Messages.php';

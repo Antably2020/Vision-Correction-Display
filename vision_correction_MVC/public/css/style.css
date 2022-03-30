@@ -501,8 +501,12 @@ i {
   margin-right: 7px;
   cursor: pointer;
 }
-
-
+.nav-link{
+  background-color:rgba(255, 255, 255, 0)  !important;
+}
+.order-btn{
+  background-color: #000 !important;
+}
 .product article .product-hover .buttons {
   position: absolute;
   bottom: 30px;
@@ -704,101 +708,6 @@ a:hover{
 
 
 /************* Cart ***************/
-
-
-.cart-container{
-  position: relative;
-  width: auto;
-  height: auto;
-  left: 50px;
-  background: rgb(253, 253, 253);
-}
-
-.product-image{
-  position: relative;
-  width: 163px;
-  height: 48px;
-  background:#000000;
-  }
-
-.cart-description{
-position: relative;
-width: 415px;
-height: 48px;
-background:#000000;
-}
-
-.cart-price{
-position: relative;
-width: 163px;
-height: 48px;
-background:#000000;
-}
-.cart-quantity{
-position: relative;
-width: 161px;
-height: 48px;
-background:#000000;
-}
-
-.cart-total{
-background:#000000;
-}
-
-.cart-delete{
-background:#000000;
-}
-
-
-.cart-table {
-  border: solid 2px;
-  text-align: left;
-  width: auto;
-  border-radius: 20%;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.cart-container table.cart img {
-  width: auto;
-  max-width: 60px;
-}
-
-.table2 {  
-  width: 22%;
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
-  border-radius: 19px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.checkot-total{
-text-align: center;
-height: 45px;
-box-sizing: border-box;
-}
-
-#table2 td, #table2 th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#table2 tr:nth-child(even){background-color: #fff;}
-
-#table2 tr:hover {background-color: #ddd;}
-
-#table2 th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #fff;
-  color: #000;
-}
-
-
 
 
 /************* my account ***************/
@@ -1070,7 +979,8 @@ footer
 footer {
   position:absolute;
   width:100%;
-  height:60px; }
+  height:60px; 
+ }
     /* Height of the footer */
   
 
@@ -1169,18 +1079,36 @@ margin-right: 50px;
 }
 table{
   
-text-align: center;
-}
+text-align: center; 
 
+
+}
+td{
+  border: 3px solid !important;
+border-color:  #000000 !important;
+font-weight: bold !important;
+  font-size: 20px !important;
+}
+.table-bordered { 
+    border: 3px solid !important;
+  border-color:  #000000 !important;
+}
+.img-fluid{ 
+  border: 3px solid !important;
+border-color:  #000000 !important;
+}
 th{
   
-  text-align: center;
+  border: 3px solid !important;
+  border-color:  #000000 !important;
+  text-align: center !important;
+  font-weight: bold !important;
+  font-size: 20px !important;
+  text-transform: uppercase !important;
   }
 
 
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
-  
   padding: 0px 10px;
 }
 

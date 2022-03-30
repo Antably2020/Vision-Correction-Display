@@ -4,7 +4,6 @@ class contact extends view{
  public function output(){
     $title = $this->model->title;
     require APPROOT . '/views/inc/header.php';
-    echo breadcrumbs(); 
  ?>
 
   <head>
@@ -26,17 +25,17 @@ class contact extends view{
     
     <form class="form" method="post" action="post" name="Contact" style="padding: 18px;" >
          <div style="margin-top:10px;">
-<select class="btn  dropdown-toggle" name="choice" style="width:60%; border:2px solid #FF7A00;">
+<select class="btn  dropdown-toggle" name="choice" style="width:60%; border:5px solid #000;">
   <option value="none" selected disabled hidden>Select</option>
-  <option value="1">Exchanges</option>
-  <option value="2">Warranty</option>
-  <option value="3">Shipping</option>
-  <option value="4">Gifts</option>
+  <option value="1">problem at system</option>
+  <option value="2">Idea recommendation</option>
+  <option value="3">reaching out</option>
+  <option value="4">more</option>
 </select>
          </div>
       <div  style=" padding-top: 30px; ">
-              <div ><label >Descrption</label></div>
-              <textarea class="form-control center-block" style="width:60% ;border:2px solid #FF7A00;" type="text" required="true" name="" ></textarea>
+              <div ><label >Description</label></div>
+              <textarea class="form-control center-block" style="width:60% ;border:5px solid #000;" type="text" required="true" name="" ></textarea>
             </div>
           
             

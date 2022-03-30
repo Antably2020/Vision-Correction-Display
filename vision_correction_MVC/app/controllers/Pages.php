@@ -17,9 +17,23 @@ class Pages extends Controller
     
     public function correctimage()
 {
+
+    $photo_result=null;
+    $path='';
+    global $photo_result;
+    global $path;
+    
+    if(isset($_FILES['Img'])){
+      $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);
+      move_uploaded_file($_FILES['Img']['tmp_name'],$path);
+      $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py '.$path.' 2>&1');
+      
+    }
+  
+    
     $CorrectImageModel = $this->getModel();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $CorrectImageModel->setImage(trim($_POST['Img']));
+        $CorrectImageModel->setImage($photo_result);
          
         //$path='C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/'.$_POST['img'];
       if (isset($input->post->form2)){
@@ -99,6 +113,7 @@ class Pages extends Controller
                 $ProfileView->setUName(trim($_POST['name']));
                 $ProfileView->setUEmail(trim($_POST['email']));
                 $ProfileView->setUPassword(trim($_POST['password']));
+                $ProfileView->setprofileIMG(trim($_POST['profileIMG']));
 
                 $ProfileView->editProduct();
                 echo'<script>alert("Profile Updated")</script>';
@@ -119,6 +134,7 @@ class Pages extends Controller
             $contactModel->setEmail(trim($_POST['email']));
             $contactModel->setComplain(trim($_POST['choice']));
             $contactModel->setDesc(trim($_POST['desc']));
+            
 
             if($contactModel->contactus()){
                 echo '<script>';  
@@ -143,7 +159,10 @@ class Pages extends Controller
 
 public function image_history()
 {
+
+    global $photo_result;
     $image_historyModel = $this->getModel();
+    echo $photo_result;
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $image_historyModel->readhistory($_SESSION['ID']);

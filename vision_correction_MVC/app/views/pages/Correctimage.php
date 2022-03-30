@@ -1,20 +1,6 @@
 
 <?php 
-$photo_result=null;
-$path='';
-function play(){
 
-    global $photo_result;
-    global $path;
-    
-    if(isset($_FILES['Img'])){
-      $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);
-      move_uploaded_file($_FILES['Img']['tmp_name'],$path);
-      $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py '.$path.' 2>&1');
-      
-    }
-  }
-     play();
 ?>
 <html>
 <?php 
@@ -25,6 +11,7 @@ class correctimage extends view{
     $title = $this->model->title;
     require APPROOT . '/views/inc/header.php';
  
+    echo $photo_result;
  ?>
    
  <head>
@@ -64,13 +51,13 @@ class correctimage extends view{
 
 </head>
 <body>
-
 <form method="post" action="" enctype="multipart/form-data">
 <div id="outer">
       <div class="upload-container" >
         <input accept="image/*" type="file" autocomplete="off"  name="Img" id="file_upload" onchange="loadFile(event)" multiple required />
     
-    </div> <input value="<?php echo $photo_result;?>" name="Img"hidden />
+    </div> 
+    <input value="<?php echo $photo_result;?>" name="Img"hidden />
      
     </div>
     <div class="row" style=" padding-top: 50px; ">

@@ -53,6 +53,8 @@ color:#000;
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo URLROOT . 'public/pages/Correctimage'; ?>">Correct Image</a>
             </li>
+            <li>
+            <a class="nav-link" href=" http://localhost/Vision-Correction-Display/quiz/">Color Blindness Test</a>
             </li>
             </ul>
   

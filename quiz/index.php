@@ -50,7 +50,7 @@
             <p id="result-description"></p>
 <br>
             <a href="reset.php" style="text-decoration:none;"><div class="xbutton" style="font-size:20px;float:inherit;margin:0 auto;margin-top:10px;">Try Again</div></a>
-            
+            <a style="text-decoration:none;" href="http://localhost/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage"><div class="xbutton" style="font-size:20px;float:inherit;margin:0 auto;margin-top:10px;">Correct My Image</div></a>
             <a hidden id="facebook_sharer" href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
             <div class="xbutton" style="font-size:20px;float:inherit;margin:0 auto;margin-top:10px;">Facebook</div>
             </a>

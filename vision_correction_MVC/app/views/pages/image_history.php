@@ -53,7 +53,7 @@ class image_history extends view{
 						<tr>
               <th>Image</th>
 							<th>Date</th>
-              <th>Delete</th>
+               <!--<th>Delete</th>-->
 							
 						</tr>
 					</thead>
@@ -63,7 +63,7 @@ class image_history extends view{
             
               <th>Image</th>
 							<th>Date</th>
-              <th>Delete</th>
+            <!--   <th>Delete</th>-->
 						</tr>
 					</tfoot>
 
@@ -81,9 +81,9 @@ class image_history extends view{
                         
 							<td><?php echo  $userID->created_at; ?></td>
 										
-    <td><form method="post" action=''><button class="order-btn  btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"  style="background-color:#FF7A00; color:white;" name="del" id="del" value=<?php echo $userID->Img;?>><span class="glyphicon glyphicon-trash" ></span></button></form></td>	</tr>
+    <!--<td><form method="post" action=''><button class="order-btn  btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"  style="background-color:#FF7A00; color:white;" name="del" id="del" value=<?php echo $userID->Img;?>><span class="glyphicon glyphicon-trash" ></span></button></form></td>	</tr>
 				
-
+  -->
 <?php
   }
   ?>

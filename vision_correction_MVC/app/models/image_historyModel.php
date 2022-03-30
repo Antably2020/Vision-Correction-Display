@@ -22,18 +22,18 @@ public function readProd()
     {
         parent::__construct();
         $this->id     = "";
-        $this->Img = "";
+        $this->photo_result = "";
         $this->created_at = "";
     }
 
     
-    public function setPImg($Img)
+    public function setPImg($photo_result)
     {
-        $this->Img = $Img;
+        $this->photo_result = $photo_result;
     }
     public function getImg()
     {
-        return $this->Img;
+        return $this->photo_result;
     }
     public function setcreated_at($created_at)
     {
@@ -62,14 +62,22 @@ public function readProd()
 }
     
 
-function deleteimage($Img) {
+function deleteimage($photo_result) {
 
-    $this->dbh->query( "DELETE FROM history WHERE Img = :Img ");
-        $this->dbh->bind(':Img', $Img);
+    $this->dbh->query( "DELETE FROM history WHERE Img = :photo_result ");
+        $this->dbh->bind(':photo_result', $photo_result);
         
     return $this->dbh->execute();
 }
 
+function deleteProduct($userID) {
+
+    $this->dbh->query( "DELETE FROM history WHERE userID = :userID "); 
+        $this->dbh->bind(':userID', $userID);
+      
+        
+    return $this->dbh->execute();
+}
 
 
 }

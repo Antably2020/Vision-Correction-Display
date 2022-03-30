@@ -50,8 +50,8 @@ class  profile extends view{
 
 
     <div class="container profile-body" style="padding-bottom:5%">
-<div class="row gutters">
-<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+<div class="">
+<div class="">
 <div class="card">
 	<div class="card-body">
 		<div class="account-settings">
@@ -122,110 +122,17 @@ class  profile extends view{
 <?php
 }
 ?>
-<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-<div class="card ">
-	<div class="card-body">
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h5 class="mb-2" style="color:#000000;">Personal Details</h5>
-			</div>
-
-			
-			<form class="form" method="post" action="" name="update" >
-       
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">Full Name</label>
-					<input type="text" name="name" class="form-control" id="fullName" placeholder="Enter full name">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="eMail">Email</label>
-					<input type="email"name="email" class="form-control" id="eMail" placeholder="Enter email ID">
-				</div>
-			</div>
-
-			
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="text"name="password" class="form-control" id="Street" placeholder="Password">
-				</div>
-			</div>
-
-         
-		
-		
-		</div>
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div >
-					<button  id="submit" name="update" style="margin-top:20px; "class=" login-btn">Update</button>
-				</div>
-			</div>
-		</div>
-  </form>
 
 
 </div>
-</div>
 
 
 
-<div class="card ">
-	<div class="card-body">
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h5 class="mb-2" style="color:#000000;">Personal Details</h5>
-			</div>
 
-			
-			<form class="form" method="post" action="" name="update" >
-       
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">Full Name</label>
-					<input type="text" name="name" class="form-control" id="fullName" placeholder="Enter full name">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="eMail">Email</label>
-					<input type="email"name="email" class="form-control" id="eMail" placeholder="Enter email ID">
-				</div>
-			</div>
 
-			
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="text"name="password" class="form-control" id="Street" placeholder="Password">
-				</div>
-			</div>
-
-         
-		
-		
-		</div>
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div >
-					<button  id="submit" name="update" style="margin-top:20px; "class=" login-btn">Update</button>
-				</div>
-			</div>
-		</div>
-  </form>
 
 
 </div>
-</div>
-</div>
-</div>
-
-
-
-
 
 
 

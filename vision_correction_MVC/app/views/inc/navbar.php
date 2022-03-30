@@ -33,7 +33,7 @@ color:#000;
 
  if(isset($_POST['logout'])){
     unset($_SESSION['ID']);
-    header('location: ' . URLROOT . 'public/pages/index');
+    header('location: ' . URLROOT . 'public/pages/Correctimage');
     
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2022 at 11:18 PM
+-- Generation Time: Mar 31, 2022 at 01:52 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.20
 
@@ -59,8 +59,8 @@ CREATE TABLE `answers` (
 --
 
 INSERT INTO `answers` (`id`, `result_id`, `question_id`, `answer`) VALUES
-(1, 1, 1, '12'),
-(2, 6, 1, 'nothing'),
+(1, 1, 1, 'Nothing'),
+(2, 6, 1, '12'),
 (3, 1, 2, '3'),
 (4, 6, 2, '8'),
 (5, 1, 3, '5'),
@@ -227,6 +227,26 @@ CREATE TABLE `eyeinputs` (
 INSERT INTO `eyeinputs` (`ID`, `focal`, `focus`, `do`, `fstop`, `resolution`, `dtype`) VALUES
 (1, 'dcd', 'dd', 'dv', 'dv', 'dv', 'dvd'),
 (2, 'dcd', 'dd', 'dv', 'dv', 'dv', 'dvd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `history`
+--
+
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `Img` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `history`
+--
+
+INSERT INTO `history` (`id`, `userID`, `Img`, `created_at`) VALUES
+(1, 1, '1648684228.jpg\n', '2022-03-30 23:50:29');
 
 -- --------------------------------------------------------
 
@@ -438,6 +458,13 @@ ALTER TABLE `eyeinputs`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -498,6 +525,12 @@ ALTER TABLE `contact`
 --
 ALTER TABLE `eyeinputs`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`

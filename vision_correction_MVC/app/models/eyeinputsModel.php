@@ -62,7 +62,7 @@ class EyeinputsModel extends UserModel
         $this->focusErr = $focusErr;
     }
 
-public function Addeyeinputs()
+public function eye_inputs()
     {
         $this->dbh->query("INSERT INTO eyeinputs (focal, focus, do,fstop,resolution,dtype) VALUES(:focal, :focus, :do, :fstop, :resolution, :dtype)");
         $this->dbh->bind(':focal', $this->focal);

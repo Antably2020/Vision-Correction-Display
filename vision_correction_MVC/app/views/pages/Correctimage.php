@@ -1,13 +1,17 @@
 
 <?php 
 $photo_result=null;
+$path='';
 function play(){
+
     global $photo_result;
-    if(isset($_FILES['file'])){
-      $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-      move_uploaded_file($_FILES['file']['tmp_name'],$path);
+    global $path;
+    
+    if(isset($_FILES['Img'])){
+      $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);
+      move_uploaded_file($_FILES['Img']['tmp_name'],$path);
       $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py '.$path.' 2>&1');
-     
+      
     }
   }
      play();
@@ -18,16 +22,18 @@ class correctimage extends view{
 
   public function output(){
     global $photo_result;
-
     $title = $this->model->title;
     require APPROOT . '/views/inc/header.php';
-    echo breadcrumbs(); 
+ 
  ?>
    
  <head>
- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 <meta name="viewport" content="width=device-width, initial-scale=1">    
-
+<style>
+   footer{
+     bottom: 0
+   }
+     </style>
 <script>
              
     function uploadFiles() {
@@ -40,7 +46,7 @@ class correctimage extends view{
         for(var i=0;i<files.length;i++){
             filenames+=files[i].name+"\n";
         }
-      //  alert("Selected file(s) :\n____________________\n"+filenames);
+     
     }
             
     var loadFile = function(event) {
@@ -51,6 +57,7 @@ class correctimage extends view{
     }
     document.getElementById('imageBox').src = filenames ;
   };
+
 </script>
 
 
@@ -58,12 +65,13 @@ class correctimage extends view{
 </head>
 <body>
 
-<form method="post" action="http://localhost/Vision-Correction-Display/vision_correction_MVC/public/pages/Correctimage" enctype="multipart/form-data">
+<form method="post" action="" enctype="multipart/form-data">
 <div id="outer">
       <div class="upload-container" >
-        <input accept="image/*" type="file" autocomplete="off"  name="file" id="file_upload" onchange="loadFile(event)" multiple required />
+        <input accept="image/*" type="file" autocomplete="off"  name="Img" id="file_upload" onchange="loadFile(event)" multiple required />
+    
+    </div> <input value="<?php echo $photo_result;?>" name="Img"hidden />
      
-    </div>
     </div>
     <div class="row" style=" padding-top: 50px; ">
 		<div class="col-md-12">
@@ -71,17 +79,22 @@ class correctimage extends view{
 </div></div>
     <div class="row"  style=" padding-top: 20px; ">
 		<div class="col-md-12">
-		<input type="submit" class="upload-btn login-btn"  onclick="runpy()uploadFiles()" value="Submit">
+		<input type="submit" class="upload-btn login-btn"  onclick="uploadFiles()" value="Submit">
     </div></div>
 </form>
 <?php
-if(isset($_FILES['file'])){
-?>
+if(isset($_FILES['Img'])){
+ ?>
 <div class="row">
 		<div class="col-md-12">
                       <img  class="view-img" src="http://localhost/Vision-Correction-Display/vision_correction_MVC/images/tmp/<?php echo $photo_result;?>" alt="Image" style="width: 500px;">
 								</div></div>
-                <?php } ?>
+                <?php } 
+                
+                
+                
+                
+                ?>
 <!--
 {% 
   if filename
@@ -115,41 +128,4 @@ if(isset($_FILES['file'])){
 }
 
 ?>
-
-<?php 
-function runtestapi() {
-$command = "python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI.py 2>&1";
-$pid = popen( $command,"r");
-while( !feof( $pid ) )
-{
- echo fread($pid, 256);
- flush();
- ob_flush();
- usleep(100000);
-}
-pclose($pid);
-}
-?>
-
-
-<?php  
-
-function runpy() {
-
-$command = escapeshellcmd('C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI.py') ;
-$results = json_decode (exec ($command) , true) ; 
-}
-
-
-?>
-<script>  
-   <?php 
-    # runtestapi();
-    print (json_encode ($results)) ;?>
-    alert("done!");
-  
-</script> 
-
-
-
 </html>

@@ -12,3 +12,4 @@ Core.correct(input_path=image,
 			deutranopia_degree=0.9)
 
 print(image.split('/')[-1])
+

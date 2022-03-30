@@ -1,7 +1,7 @@
 
 <html>
 <?php 
-class correctimage extends view{
+class correctedimageendpoint extends view{
 
   ?> 
  <head>

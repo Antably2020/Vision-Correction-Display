@@ -52,7 +52,7 @@ if(isset($_POST['logout'])){
  <a  href="<?php echo URLROOT . 'public/admin/A_userview'; ?>">USERS</a>
  <hr>
 
-   <a  href="<?php echo URLROOT . 'public/admin/A_products'; ?>">VIEW PRODUCTS</a>
+   <a  href="<?php echo URLROOT . 'public/admin/image_history'; ?>">VIEW PRODUCTS</a>
  
  <hr>
 

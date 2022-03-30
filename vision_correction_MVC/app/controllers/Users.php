@@ -57,8 +57,9 @@ class Users extends Controller
         $view->output();
     }
 
-    public function addeyeinputs()
+    public function eye_inputs()
     {   
+        
         $eyeinputsModel = $this->getModel();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
@@ -111,7 +112,7 @@ class Users extends Controller
         //echo 'Load form, Request method: ' . $_SERVER['REQUEST_METHOD'];
         $viewPath = VIEWS_PATH . 'users/eye_inputs.php';
         require_once $viewPath;
-        $view = new Eyeinputs($this->getModel(), $this);
+        $view = new eye_inputs($this->getModel(), $this);
         $view->output();
     }
 

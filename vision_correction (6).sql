@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2022 at 01:52 AM
+-- Generation Time: Mar 31, 2022 at 06:15 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.20
 
@@ -20,26 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `vision_correction`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `about`
---
-
-CREATE TABLE `about` (
-  `description` text NOT NULL,
-  `Vision` text NOT NULL,
-  `Mission` text NOT NULL,
-  `id` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `about`
---
-
-INSERT INTO `about` (`description`, `Vision`, `Mission`, `id`) VALUES
-('hi i\"m testing this page now!!', 'hi i\"m testing this page now!!', 'hi i\"m testing this page now!!', 0);
 
 -- --------------------------------------------------------
 
@@ -125,15 +105,15 @@ INSERT INTO `answers` (`id`, `result_id`, `question_id`, `answer`) VALUES
 (70, 1, 29, 'A Line'),
 (71, 6, 30, 'Blue-Green Line'),
 (72, 1, 30, 'Nothing'),
-(73, 6, 31, 'Blue-Green Line'),
+(73, 6, 31, 'Green Line'),
 (74, 1, 31, 'Nothing'),
 (75, 6, 32, 'Orange Line'),
-(76, 1, 32, 'Nothing Or False Line'),
+(76, 1, 32, 'Nothing'),
 (77, 6, 33, 'Orange Line'),
-(78, 1, 33, 'Nothing Or False Line'),
-(79, 6, 34, 'Blue-Green and Yellow Line'),
+(78, 1, 33, 'Nothing'),
+(79, 6, 34, 'Green and Yellow Line'),
 (80, 1, 34, 'Only Red-Green and Violet line '),
-(81, 6, 35, ' blue-green and yellow-green line '),
+(81, 6, 35, ' green and yellow-green line '),
 (82, 1, 35, 'only blue-green and violet line '),
 (83, 6, 36, 'violet and orange line'),
 (84, 1, 36, 'blue-green and violet line '),
@@ -141,55 +121,6 @@ INSERT INTO `answers` (`id`, `result_id`, `question_id`, `answer`) VALUES
 (86, 1, 37, 'blue-green and violet line '),
 (87, 6, 38, 'A line'),
 (88, 6, 38, 'Nothing');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cart`
---
-
-CREATE TABLE `cart` (
-  `id` int(11) NOT NULL,
-  `productID` int(11) NOT NULL,
-  `userID` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `sum` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `productID`, `userID`, `quantity`, `sum`) VALUES
-(1, 6, 1, 2, 1132),
-(5, 6, 1, 3, 1698),
-(7, 10, 1, 1, 345);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
-CREATE TABLE `categories` (
-  `categoryID` int(11) NOT NULL,
-  `category` varchar(255) NOT NULL,
-  `catImage` varchar(50) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`categoryID`, `category`, `catImage`) VALUES
-(0, 'Transmission', 'images/cat0.jpg'),
-(1, 'Exhaust Systems', 'images/p1.jpg'),
-(2, 'Air Cleaners ', 'images/cat2.jpg'),
-(3, 'Handlebars', 'images/cat3.jpg'),
-(4, 'Bike Protection', 'images/cat4.jpg'),
-(5, 'Suspensions', 'images/cat5.jpg'),
-(6, 'Brakes', 'images/cat6.jpg'),
-(7, 'Engine Parts', 'images/cat7.jpg');
 
 -- --------------------------------------------------------
 
@@ -247,64 +178,6 @@ CREATE TABLE `history` (
 
 INSERT INTO `history` (`id`, `userID`, `Img`, `created_at`) VALUES
 (1, 1, '1648684228.jpg\n', '2022-03-30 23:50:29');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `productID` int(11) NOT NULL,
-  `userID` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `Fullname` varchar(20) NOT NULL,
-  `Email` varchar(40) NOT NULL,
-  `Phone` int(11) NOT NULL,
-  `City` varchar(20) NOT NULL,
-  `address` text NOT NULL,
-  `Street` varchar(50) NOT NULL,
-  `Building` varchar(10) NOT NULL,
-  `Floor` int(10) NOT NULL,
-  `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE `products` (
-  `name` varchar(50) NOT NULL,
-  `description` text NOT NULL,
-  `oldPrice` float NOT NULL,
-  `price` float NOT NULL,
-  `id` int(11) NOT NULL,
-  `img` varchar(250) NOT NULL,
-  `featured` tinyint(1) NOT NULL,
-  `category` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`name`, `description`, `oldPrice`, `price`, `id`, `img`, `featured`, `category`) VALUES
-('timing parts', 'Size 16', 1800, 1500, 2, 'images/single-handlebar-showing-cup-popup_1000x.jpg', 1, 7),
-('mahmoud', 'gd3', 0, 900000, 3, 'images/TTX-flow-DV_hemsida-380x240.jpg', 1, 4),
-('akrapovic', 'high sound exhaust', 600, 566, 6, 'images/p3.jpg', 1, 1),
-('c200', 'perfect condition ', 500, 345, 10, 'images/car.jpg', 1, 0),
-('new brakes', 'good product', 120, 100, 11, 'images/Motorcycle-Brake-Rotor-and-Pad.JPG', 0, 4),
-('exhaust', 'good product', 6000, 5230, 20, 'images/p1.jpg', 1, 1),
-('ransmission ig', 'good product', 4000, 4000, 21, 'images/old-parts-motorcycles-background-hard-260nw-459371572.jpg', 0, 0),
-('brake ff', 'good product', 1200, 1000, 22, 'images/Motorcycle-Brake-Rotor-and-Pad.jpg', 1, 6),
-('sliders', 'good product', 600, 500, 28, 'images/abc0364ea74a8a1ba8e33c840012d630.jpg', 1, 4),
-('sliders', 'good product', 500, 400, 29, 'images/abc0364ea74a8a1ba8e33c840012d630.jpg', 0, 4),
-('short block', 'good product perfect', 15000, 14000, 30, 'images/cat2.jpg', 0, 7),
-('product', 'good product', 150, 100, 35, 'images/619hKdps11L._AC_SY355_.jpg', 1, 1),
-('slave', 'good slave eswd', 50, 30, 36, 'images/835bc45b458bb94aed0df244e7d8e796.jpg', 1, 2),
-('testonline', 'good product', 300, 300, 37, 'images/', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -417,32 +290,12 @@ INSERT INTO `users` (`ID`, `Name`, `Email`, `Password`, `Age`, `Type`, `Points`,
 --
 
 --
--- Indexes for table `about`
---
-ALTER TABLE `about`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `answers`
 --
 ALTER TABLE `answers`
   ADD PRIMARY KEY (`id`),
   ADD KEY `question_id` (`question_id`),
   ADD KEY `result_id` (`result_id`);
-
---
--- Indexes for table `cart`
---
-ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pID` (`productID`),
-  ADD KEY `uID` (`userID`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`categoryID`);
 
 --
 -- Indexes for table `contact`
@@ -463,21 +316,6 @@ ALTER TABLE `eyeinputs`
 ALTER TABLE `history`
   ADD PRIMARY KEY (`id`),
   ADD KEY `userID` (`userID`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pID` (`productID`),
-  ADD KEY `userID` (`userID`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `index` (`category`);
 
 --
 -- Indexes for table `questions`
@@ -509,12 +347,6 @@ ALTER TABLE `answers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
--- AUTO_INCREMENT for table `cart`
---
-ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
@@ -531,18 +363,6 @@ ALTER TABLE `eyeinputs`
 --
 ALTER TABLE `history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `questions`
@@ -574,30 +394,10 @@ ALTER TABLE `answers`
   ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`result_id`) REFERENCES `results` (`id`);
 
 --
--- Constraints for table `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `contact`
 --
 ALTER TABLE `contact`
   ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`email`) REFERENCES `users` (`Email`);
-
---
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category`) REFERENCES `categories` (`categoryID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

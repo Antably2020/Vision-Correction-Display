@@ -1,6 +1,6 @@
 <body>
 <?php
-class Eyeinputs extends view
+class eye_inputs extends view
 {
   public function output()
   {

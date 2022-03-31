@@ -60,46 +60,46 @@ class Users extends Controller
     public function eye_inputs()
     {   
         
-        $eyeinputsModel = $this->getModel();
+        $EyeinputsModel = $this->getModel();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
-            $eyeinputsModel->setFocal(trim($_POST['focal']));
-            $eyeinputsModel->setFocus(trim($_POST['focus']));
-            $eyeinputsModel->setDo(trim($_POST['do']));
-            $eyeinputsModel->setFstop(trim($_POST['fstop']));
-            $eyeinputsModel->setConfirmPassword(trim($_POST['resolution']));
-            $eyeinputsModel->setDtype(trim($_POST['dtype']));
+            $EyeinputsModel->setFocal(trim($_POST['focal']));
+            $EyeinputsModel->setFocus(trim($_POST['focus']));
+            $EyeinputsModel->setDo(trim($_POST['do']));
+            $EyeinputsModel->setFstop(trim($_POST['fstop']));
+            $EyeinputsModel->setConfirmPassword(trim($_POST['resolution']));
+            $EyeinputsModel->setDtype(trim($_POST['dtype']));
 
             //validation
             
-            if (empty($eyeinputsModel->getFocal())) {
-                $eyeinputsModel->setFocalErr('Please focal length');
+            if (empty($EyeinputsModel->getFocal())) {
+                $EyeinputsModel->setFocalErr('Please focal length');
             }
-            if (empty($eyeinputsModel->getFocus())) {
-                $eyeinputsModel->setFocusErr('Please enter focus');
+            if (empty($EyeinputsModel->getFocus())) {
+                $EyeinputsModel->setFocusErr('Please enter focus');
             }
-            if (empty($eyeinputsModel->getDo())) {
-                $eyeinputsModel->setDoErr('Please enter Do');
+            if (empty($EyeinputsModel->getDo())) {
+                $EyeinputsModel->setDoErr('Please enter Do');
             }
-            if (empty($eyeinputsModel->getFstop())) {
-                $eyeinputsModel->setFstopsErr('Please enter Fstop');
+            if (empty($EyeinputsModel->getFstop())) {
+                $EyeinputsModel->setFstopsErr('Please enter Fstop');
             }
-            if (empty($eyeinputsModel->getResolution())) {
-                $eyeinputsModel->setResolutionErr('Please enter Resolution');
+            if (empty($EyeinputsModel->getResolution())) {
+                $EyeinputsModel->setResolutionErr('Please enter Resolution');
             }
-            if (empty($eyeinputsModel->getDtype())) {
-                $eyeinputsModel->setDtyprErr('Please enter Device Type');
+            if (empty($EyeinputsModel->getDtype())) {
+                $EyeinputsModel->setDtyprErr('Please enter Device Type');
             }
            
 
             if (
-                empty($eyeinputsModel->getFocal()) &&
-                empty($eyeinputsModel->getFocus()) &&
-                empty($eyeinputsModel->getDo()) &&
-                empty($eyeinputsModel->getFstop())
+                empty($EyeinputsModel->getFocal()) &&
+                empty($EyeinputsModel->getFocus()) &&
+                empty($EyeinputsModel->getDo()) &&
+                empty($EyeinputsModel->getFstop())
             ) {
                 //Hash Password
-                $eyeinputsModel->setFstop($_POST['fstop']);
+                $EyeinputsModel->setFstop($_POST['fstop']);
 
                 if ($eyeinputsModel->addeyeinputs()) {
                     header('location: ' . URLROOT . 'public/users/login');

@@ -4,7 +4,7 @@ class  Errorr extends view{
         $title = $this->model->title;
     require APPROOT . '/views/inc/header.php';
     ?>  
-    <div style="background-color: #FF7A00 ; width:100%; margin-top:147px">
+    <div style="width:100%; margin-top:147px">
     <div class="row  justify-content-center align-items-center" style="margin-bottom:-40px;">
     <label style="font-size:40px; ">OOPS!!</label><br>
     </div>
@@ -12,7 +12,7 @@ class  Errorr extends view{
 
            
             <label style="font-size:150px; ">4</label> 
-            <img src=<?php echo URLROOT . 'images/Wheel.png';?> alt="Wheel" style="width : 100px; height:100px;"> 
+            <img src=<?php echo URLROOT . 'images/404.png';?> alt="Wheel" style="width : 100px; height:100px;"> 
             <label style="font-size:150px;">4</label>
     
 </div>    
@@ -21,8 +21,6 @@ class  Errorr extends view{
 </div>
     </div>  
  <?php
-
-require APPROOT . '/views/inc/footer.php';
 
   }
 }

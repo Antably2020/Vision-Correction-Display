@@ -2,7 +2,7 @@
 require_once 'UserModel.php';
 class EyeinputsModel extends UserModel
 {
-    public  $title = 'User Registration Page';
+    public  $title = 'User eye inputs Page';
     protected $focal;
     protected $focalErr;
     protected $focus;

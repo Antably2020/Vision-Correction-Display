@@ -36,9 +36,7 @@ class Pages extends Controller
       }
        
         if($CorrectImageModel->uploadhistory()){
-            echo '<script>';  
-            echo 'alert("image added!!!")';  
-            echo '</script>'; 
+           
         }
         else{
             die('Error has occured');

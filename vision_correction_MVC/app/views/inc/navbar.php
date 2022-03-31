@@ -46,14 +46,7 @@ color:#000;
     
 <ul class="navbar-nav">
 <li class="nav-item ">
-<li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT . 'public/pages/image_history'; ?>">Image History</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo URLROOT . 'public/pages/Correctimage'; ?>">Correct Image</a>
-            </li>
-            <li>
+
             <a class="nav-link" href=" http://localhost/Vision-Correction-Display/quiz/">Color Blindness Test</a>
             </li>
             </ul>
@@ -91,6 +84,13 @@ color:#000;
             }
             else{
                 ?>
+                <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT . 'public/pages/image_history'; ?>">Image History</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo URLROOT . 'public/pages/Correctimage'; ?>">Correct Image</a>
+            </li>
                  <li class="nav-item">
                 <a class="nav-link" href="<?php echo URLROOT . 'public/pages/profile'; ?>">My Account</a>
             </li>

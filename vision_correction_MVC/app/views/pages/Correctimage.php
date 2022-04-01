@@ -17,9 +17,7 @@ class correctimage extends view{
  <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">    
 <style>
-   footer{
-     bottom: 0
-   }
+  
      </style>
 <script>
              

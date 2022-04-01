@@ -97,7 +97,6 @@ class Pages extends Controller
                 $ProfileView->setUName(trim($_POST['name']));
                 $ProfileView->setUEmail(trim($_POST['email']));
                 $ProfileView->setUPassword(trim($_POST['password']));
-                $ProfileView->setprofileIMG(trim($_POST['profileIMG']));
 
                 $ProfileView->editProduct();
                 echo'<script>alert("Profile Updated")</script>';

@@ -29,8 +29,7 @@ class Pages extends Controller
       $path=escapeshellarg($path);
       $type=escapeshellarg($type);
       $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py "'.$path.'" "'.$type.'" 2>&1');
-      echo $type;
-      echo $photo_result;
+     
       }
       else{
           echo 'emshy yad mn hna';

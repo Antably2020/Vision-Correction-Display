@@ -49,7 +49,7 @@ class  profile extends view{
 
 
 
-    <div class="container profile-body" style="padding-bottom:5%">
+    <div class="container " style="padding-bottom:5%">
 <div class="">
 <div class="">
 <div class="card">

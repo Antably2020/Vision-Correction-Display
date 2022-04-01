@@ -14,15 +14,24 @@ class Pages extends Controller
 {
 
     $photo_result=null;
+    $type='';
     $path='';
     global $photo_result;
     global $path;
-    
+    global $kind;
+    global $type;
     if(isset($_FILES['Img'])){
       $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);
+      $type=1;
       move_uploaded_file($_FILES['Img']['tmp_name'],$path);
+      $path=escapeshellarg($path);
+      $type=escapeshellarg($type);
       $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py '.$path.' 2>&1');
-      
+      $kind = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py '.$type.' 2>&1');
+ 
+     echo $type;
+      echo $photo_result;
+
     }
   
     

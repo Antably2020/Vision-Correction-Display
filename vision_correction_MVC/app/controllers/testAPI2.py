@@ -11,7 +11,7 @@ if degree=='1':
 			return_type='save',
 			save_path=image,
 			protanopia_degree=0.9,
-			deutranopia_degree=0.9)
+			deutranopia_degree=0)
 
 elif degree=='2':
 	Core.correct(input_path=image,

@@ -12,7 +12,7 @@ class Pages extends Controller
   
     public function correctimage()
 {
-
+    
     $photo_result=null;
     $type='';
     $path='';
@@ -21,26 +21,30 @@ class Pages extends Controller
     global $type;
     if(isset($_FILES['Img'])){
       $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);
-      $type=2;
+      //$type=2;
+      if (isset($_POST['type'])){
+
+       $type= $_POST['type'];
       move_uploaded_file($_FILES['Img']['tmp_name'],$path);
       $path=escapeshellarg($path);
       $type=escapeshellarg($type);
       $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py "'.$path.'" "'.$type.'" 2>&1');
- 
-     echo $type;
+      echo $type;
       echo $photo_result;
-
+      }
+      else{
+          echo 'emshy yad mn hna';
+      }
     }
   
     
     $CorrectImageModel = $this->getModel();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $CorrectImageModel->setImage($photo_result);
-         
-      if (isset($input->post->form2)){
-
+        $CorrectImageModel->setType(trim($_POST['type']));
+    
         
-      }
+      
        
         if($CorrectImageModel->uploadhistory()){
            

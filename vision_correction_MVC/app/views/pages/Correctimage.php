@@ -49,18 +49,40 @@ class correctimage extends view{
 </head>
 <body>
 <form method="post" action="" enctype="multipart/form-data">
+
+
+
+<div class="row" style=" padding-top: 50px; ">
+<div class="col-md-12">
+<h1  style="margin-top: 30px;margin-bottom: 20px;">CHOOSE <b>TYPE</b></h1>
+
+  <select name="type" id="" class="upload-btn login-btn" >
+  <option value="1"class>Protanopia</option>
+  <option value="2">Dutranopia</option>
+  </select>
+
+
+  <div class="row">
+<div class="col-md-12">
+<h1  style="margin-top: 10px;">CHOOSE <b>IMAGE</b></h1>
+</div></div>
 <div id="outer">
       <div class="upload-container" >
-        <input accept="image/*" type="file" autocomplete="off"  name="Img" id="file_upload" onchange="loadFile(event)" multiple required />
+      <input accept="image/*" type="file" autocomplete="off"  name="Img" id="file_upload" onchange="loadFile(event)" multiple required />
     
     </div> 
-    <input value="<?php echo $photo_result;?>" name="Img"hidden />
-     
     </div>
-    <div class="row" style=" padding-top: 50px; ">
+
+   <!-- <input value="<?php //echo $photo_result;?>" name="Img"hidden />-->
+   
+
+
+<div class="row" style=" padding-top: 50px; ">
 		<div class="col-md-12">
-    <img  id="output" width=100px/>
+<img  id="output" width=100px/>
 </div></div>
+
+
     <div class="row"  style=" padding-top: 20px; ">
 		<div class="col-md-12">
 		<input type="submit" class="upload-btn login-btn"  onclick="uploadFiles()" value="Submit">

@@ -18,7 +18,6 @@ class Pages extends Controller
     $path='';
     global $photo_result;
     global $path;
-    global $kind;
     global $type;
     if(isset($_FILES['Img'])){
       $path="C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/images/tmp/".time().".".pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);

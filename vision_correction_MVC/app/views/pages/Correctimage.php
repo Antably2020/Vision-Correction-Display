@@ -11,7 +11,6 @@ class correctimage extends view{
     $title = $this->model->title;
     require APPROOT . '/views/inc/header.php';
  
-    echo $photo_result;
  ?>
    
  <head>

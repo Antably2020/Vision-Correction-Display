@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2022 at 07:31 PM
+-- Generation Time: Apr 02, 2022 at 04:25 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.20
 
@@ -170,33 +170,9 @@ CREATE TABLE `history` (
   `userID` int(11) NOT NULL,
   `Img` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
+  `degree` float NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `history`
---
-
-INSERT INTO `history` (`id`, `userID`, `Img`, `type`, `created_at`) VALUES
-(96, 10, '1648829299.jpg\n', '', '2022-04-01 16:08:20'),
-(97, 10, 'noooo\n1648829326.jpg\n', '', '2022-04-01 16:08:47'),
-(98, 10, '1648829380.jpg\n', '', '2022-04-01 16:09:41'),
-(99, 10, 'noooo\n1648829628.jpg\n', '', '2022-04-01 16:13:48'),
-(100, 10, 'noooo\n1648829634.jpg\n', '', '2022-04-01 16:13:55'),
-(101, 10, 'noooo\n1648829688.jpg\n', '', '2022-04-01 16:14:48'),
-(102, 10, 'noooo\n1648829791.jpg\n', '', '2022-04-01 16:16:32'),
-(103, 10, 'noooo\n1648829876.jpg\n', '', '2022-04-01 16:17:57'),
-(104, 10, 'noooo\n1648829885.jpg\n', '', '2022-04-01 16:18:06'),
-(105, 10, 'noooo\n1648829958.jpg\n', '', '2022-04-01 16:19:19'),
-(106, 10, 'noooo\n1648830062.jpg\n', 'protanopia', '2022-04-01 16:21:03'),
-(107, 10, 'noooo\n1648830179.jpg\n', 'deutranopia', '2022-04-01 16:23:00'),
-(108, 10, '1648830213.jpg\n', '1', '2022-04-01 16:23:33'),
-(109, 10, '1648830233.jpg\n', '2', '2022-04-01 16:23:54'),
-(110, 10, '1648830245.jpg\n', '1', '2022-04-01 16:24:06'),
-(111, 10, '1648830649.jpg\n', '1', '2022-04-01 16:30:49'),
-(112, 10, '1648830665.jpg\n', '2', '2022-04-01 16:31:05'),
-(113, 10, '1648830674.jpg\n', '1', '2022-04-01 16:31:14'),
-(114, 10, '1648830692.jpg\n', '2', '2022-04-01 16:31:32');
 
 -- --------------------------------------------------------
 
@@ -386,7 +362,7 @@ ALTER TABLE `eyeinputs`
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
 
 --
 -- AUTO_INCREMENT for table `questions`

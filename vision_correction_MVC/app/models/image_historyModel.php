@@ -39,6 +39,7 @@ public function readProd()
     {
         $this->created_at = $created_at;
     }
+    
   
 
 
@@ -70,14 +71,7 @@ function deleteimage($photo_result) {
     return $this->dbh->execute();
 }
 
-function deleteProduct($userID) {
 
-    $this->dbh->query( "DELETE FROM history WHERE userID = :userID "); 
-        $this->dbh->bind(':userID', $userID);
-      
-        
-    return $this->dbh->execute();
-}
 
 
 }

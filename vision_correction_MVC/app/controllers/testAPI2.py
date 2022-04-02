@@ -5,20 +5,23 @@ import sys
 from werkzeug.utils import secure_filename
 
 image = sys.argv[1]
-degree = sys.argv[2]
-if degree=='1':
+kind = sys.argv[2]
+degree = sys.argv[3]
+degree=float(degree)
+
+if kind=='1':
 	Core.correct(input_path=image,
 			return_type='save',
 			save_path=image,
-			protanopia_degree=0.9,
+			protanopia_degree=degree,
 			deutranopia_degree=0)
 
-elif degree=='2':
+elif kind=='2':
 	Core.correct(input_path=image,
 			return_type='save',
 			save_path=image,
 			protanopia_degree=0,
-			deutranopia_degree=0.9)
+			deutranopia_degree=degree)
 else :
 	print ('noooo')
 print(image.split('/')[-1])

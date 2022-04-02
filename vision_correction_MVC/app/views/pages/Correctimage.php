@@ -48,12 +48,12 @@ class correctimage extends view{
 
 </head>
 <body>
+<div class="row" style=" padding-top: 50px; ">
+<div class="center-block">
 <form method="post" action="" enctype="multipart/form-data">
 
 
 
-<div class="row" style=" padding-top: 50px; ">
-<div class="col-md-12">
 <h1  style="margin-top: 30px;margin-bottom: 20px;">CHOOSE <b>TYPE</b></h1>
 
   <select name="type" id="" class="upload-btn login-btn" >
@@ -61,11 +61,24 @@ class correctimage extends view{
   <option value="2">Dutranopia</option>
   </select>
 
+  <h1  style="margin-top: 30px;margin-bottom: 20px;">CHOOSE <b>DEGREE</b></h1>
 
-  <div class="row">
-<div class="col-md-12">
+  <select name="degree" id="" class="upload-btn login-btn" >
+  <option value="0"class>0</option>
+  <option value="0.1">0.1</option>
+  <option value="0.2">0.2</option>
+  <option value="0.3">0.3</option>
+  <option value="0.4">0.4</option>
+  <option value="0.5">0.5</option>
+  <option value="0.6">0.6</option>
+  <option value="0.7">0.7</option>
+  <option value="0.8">0.8</option>
+  <option value="0.9">0.9</option>
+  </select>
+
+
 <h1  style="margin-top: 10px;">CHOOSE <b>IMAGE</b></h1>
-</div></div>
+
 <div id="outer">
       <div class="upload-container" >
       <input accept="image/*" type="file" autocomplete="off"  name="Img" id="file_upload" onchange="loadFile(event)" multiple required />
@@ -82,22 +95,26 @@ class correctimage extends view{
 <img  id="output" width=100px/>
 </div></div>
 
-
-    <div class="row"  style=" padding-top: 20px; ">
-		<div class="col-md-12">
 		<input type="submit" class="upload-btn login-btn"  onclick="uploadFiles()" value="Submit">
-    </div></div>
-</form>
+   
+</form></div>
+
+                  
+<div class="vl" style=" height: 700px !important;background-color: #000000;border: 5px solid #000000;"></div>
 <?php
 if(isset($_FILES['Img'])){
  ?>
-<div class="row">
-		<div class="col-md-12">
+<div class="center-block">
+  <a href="http://localhost/Vision-Correction-Display/vision_correction_MVC/images/tmp/<?php echo $photo_result;?>">
                       <img  class="view-img" src="http://localhost/Vision-Correction-Display/vision_correction_MVC/images/tmp/<?php echo $photo_result;?>" alt="Image" style="width: 500px;">
-								</div></div>
+                      </a></div></div>
                 <?php } 
                 
-                
+                else{?>
+<div class="center-block">
+<img  class="view-img" src="http://localhost/Vision-Correction-Display/vision_correction_MVC/images/logo.png" alt="Image" style="width: 500px;">
+</div></div>
+             <?php   }
                 
                 
                 ?>

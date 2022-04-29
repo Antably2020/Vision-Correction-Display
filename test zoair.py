@@ -1,10 +1,13 @@
-from tkinter.tix import CELL
+#import lbfgsb
+import spare 
+from imshift import *
+import cv2 
 from turtle import shape
 import numpy as np
 import math
+from scipy.sparse import coo_matrix, csc_matrix
 from scipy import sparse
-import scipy.io as sio
-from os.path import dirname, join as pjoin
+from dsearchn import dsearchn as ds
 class Display:
     def __init__(self,Angular_HRes,screen_pixel_pitch,screen_pixels,padding,depth):
         self.Angular_HRes=Angular_HRes
@@ -20,8 +23,8 @@ class Display:
         return(self.screen_pixels+self.padding)
 
     def size(self):
-        return(self.screen_pitch()*self.screen_pixels)     
-         
+        return(self.screen_pitch()*self.resolution())
+
     def sampling(self):
         x = np.zeros((self.resolution(),1))
         S = np.linspace(-self.size()/2, self.size()/2, self.resolution()+1)
@@ -45,7 +48,7 @@ class Camera:
         return (screen_size/Do*self.di())    
     def sampling(self):
         x = np.zeros((self.resolution,1))
-        S = np.linspace(self.sensor_width(self.Do,self.display.size())/2, -self.sensor_width(self.Do,self.display.size())/2, self.resolution+1)
+        S = np.linspace(self.sensor_width(self.Do,self.display.screen_pitch()*self.display.screen_pixels)/2, -self.sensor_width(self.Do,self.display.screen_pitch()*self.display.screen_pixels)/2, self.resolution+1)
         for i in range(len(S)-1):
             x[i] = (S[i] + S[i+1])/2
         return x; 
@@ -68,7 +71,8 @@ class Camera2Screen:
         y = R[1,:][np.newaxis]
         x = x.reshape(np.shape(self.X))
         y = y.reshape(np.shape(self.Y))
-        return x,y 
+       
+        return x,y
 
 class Angular_Boundary:
         def __init__(self,nView, SPP, Depth, XtraPix):
@@ -108,9 +112,7 @@ class BackwardTransport:
         self.Do=Do
         self.Xtrapix=XtraPix
 
-    def dsearchn(x, v):
-        return int(np.where(np.abs(x-v) == np.abs(x-v).min())[0]) 
-
+   
     def BackwardTransportExt3(self):
         Yo=np.zeros((len(self.Vs),self.Camera.resolution))
         Vo=np.zeros((len(self.Vs),self.Camera.resolution))
@@ -125,7 +127,8 @@ class BackwardTransport:
             Yo[:,j],Vo[:,j] = camera2object.camera2screen()
             Vo[:,j]=Vo[:,j]/math.pi*180
             Yo[:,j]=Yo[:,j]+self.offset
-            #Yo[:,j] = BackwardTransport.dsearchn(display_sampling,Yo[:,j]) 
+            p  = ds(display_sampling,Yo[:,j]) #change Yo[:,j] to P
+            Yo[:,j] = p[:,0] 
             S=Vo[:,j]
             K=S
             
@@ -164,13 +167,13 @@ class BuildMatrix:
         Sampling = 20
         psf_size = 240
 
-        ind_r = np.zeros(37359783)
-        print(ind_r.shape)
-        ind_c = np.zeros(37359783)
-        val_s = np.zeros(37359783)
+        ind_r = np.zeros((self.camera.resolution**2*psf_size*2,1))
+        ind_c = np.zeros((self.camera.resolution**2*psf_size*2,1))
+        val_s = np.zeros((self.camera.resolution**2*psf_size*2,1))
+        
         index=0
-        #camera = Camera(50,8,375,128)
-        #display = Display(5,0.078,128,12)
+#        camera = Camera(50,8,375,128)
+ #       display = Display(5,0.078,128,12)
         Vs = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
         Us = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
         
@@ -178,12 +181,7 @@ class BuildMatrix:
         us, vs =np.meshgrid(Us,Vs)
         Z = np.zeros(np.shape(us))               
         Z [us**2 + vs**2 < (self.camera.aperture()/2)**2 ] = 1
-        HBVals = self.angular.Angular_BoundaryExt2()
-        #VBVals = self.angular.Angular_BoundaryExt2()
-        
-      
-        #BackwardTransport(self.Epsilon_y, HBVals, display, camera, Vs, self.Do, self.angular.XtraPix)
-        #BackwardTransport(self.Epsilon_x, VBVals, display, camera, Us, self.Do, self.angular.XtraPix)
+
         print('start y-v backward transport')
         Yo, Vo = self.Backward.BackwardTransportExt3()
 
@@ -197,27 +195,31 @@ class BuildMatrix:
         
         print('start sampling and build projection matrix')
         for j in range(0,self.camera.resolution):
-           #print('Progress = %3.0f %%', j/self.camera.resolution*100)
-            for i in range(0,self.camera.resolution):
-
+            print('Progress = %d', j/self.camera.resolution*100)
+            for i in range(0,self.camera.resolution): 
                 xo, yo = np.meshgrid(Yo[:,j], Xo[:,i])          
                 pixels = np.array([yo.reshape(-1),xo.reshape(-1)]).transpose()
                 uo, vo = np.meshgrid(Uo[:,j] , Vo[:,i])
                 angles = np.array([vo.reshape(-1),uo.reshape(-1)]).transpose()
-        
-                
                 samples = np.concatenate([pixels, angles],1)
-                
+ #               print (self.camera.resolution**2)
+#                print (self.display.resolution()**2 * 25) 
+#                exit()
                 samples = samples[Z.reshape(-1) != 0,:]
             
                 w = np.shape(samples)[0]
-                b, n= np.unique(samples,return_index= True,axis = 0)
-                X0 = np.ones((len(n),1))
-                CELL =np.concatenate([b, X0],1)   
+                
+                b, n= np.unique(samples,return_counts=True,axis = 0)
+                X0 =n.reshape((len(n),1))
+   #             print (b)
+  #              print (X0)
+                CELL =np.concatenate([b, X0],1)
+ #               print (CELL)
+#                exit()   
                 Angular_Res=5
                 Angular_VRes=Angular_Res
                 Angular_HRes=Angular_Res
-                
+                               
                 
                 for r in range(0,b.shape[0]):
                     index0 = i * self.camera.resolution + j
@@ -229,48 +231,146 @@ class BuildMatrix:
                     index = index + 1
         #aa = np.concatenate([ind_r, ind_c],1) 
         #aaa = np.concatenate([aa,val_s],1)        
-        print(ind_r.shape)   
-        print(ind_c.shape)  
-        print(val_s.shape)  
+        r = ind_r.T
+        r = r[0]
+  #      print(r)
+        c = ind_c.T
+        c = c[0]   
+ #       print(c)
+        s = val_s.T
+        s = s[0]  
+#        print(s)  
+        
         print('start making sparse system matrix')
-        #A = sparse.coo_matrix((val_s,(ind_r,ind_c)),(37359783,self.display.resolution()**2 * 25)).toarray()
-        A=np.loadtxt(open("A.csv", "rb"), delimiter=",", skiprows=1)
-        print('this is final AAAAAA')
-        print(A.shape)
-
-       #(self.camera.resolution**2,self.display.resolution()**2 * 25)
-        print('i ammmmmmm')
-        
-        
-       
-        return A
-        
+        A = csc_matrix((s,(r,c)),(815599,815599)).toarray()
+#        A = np.reshape(A,(self.camera.resolution**2,self.display.resolution()**2 * 25))
+        np.save('sparse',A)
+        print (A)        
+ #       exit()
+      #  return ind_r,ind_c,val_s
+#        A = spare.spares(s,r,c,self.camera.resolution**2,self.display.resolution()**2 * 25)
+        return A 
 
 
+#def main():
+img = '/Users/rahulkumar/Downloads/kareem/images/Balloon1_256.png'    
+Do = 250
+    
 display=Display(5,0.078,128,12,5.514)
 camera=Camera(50,8,375,128,display)
-
+#print (camera)
 angular = Angular_Boundary(5, display.screen_pixel_pitch,display.depth , 5)
-
-#print (np.shape(xx.sampling()))
 
 Vs = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
 Us = np.linspace(-camera.aperture()/2,camera.aperture()/2,int((camera.aperture()*20)+1)) # used in matrix length,concatination
+
 HBvals= Angular_Boundary(5, display.screen_pixel_pitch, display.depth, 5).Angular_BoundaryExt2()
-xjj = BackwardTransport(0,HBvals,display,camera,Vs,250,5)
-b = xjj.BackwardTransportExt3()
-zoairjr = BackwardTransport(0, HBvals, display, camera, Vs, 250, angular.XtraPix)
-zoair = BackwardTransport(0, HBvals, display, camera, Us, 250, angular.XtraPix)
-bb = BuildMatrix(display,camera,250,0,0,angular,zoair)
-#print(bb.build_matrix())
-a = bb.build_matrix()
-print(a.shape)
 
-#np.savetxt("1.csv",a , delimiter=",")   
-#np.savetxt("2.csv",b , delimiter=",")   
-#np.savetxt("3.csv",c , delimiter=",")   
+backword_object = BackwardTransport(0,HBvals,display,camera,Vs,250,angular.XtraPix)
 
-#np.savetxt("4.csv",d , delimiter=",")   
+bm = BuildMatrix(display,camera,250,0,0,angular,backword_object)
+A1 = bm.build_matrix()
+    ############### MY ###################
+
+LAMDA = 0.08
+SPEEDY = True
+if LAMDA:
+   B = sparse.eye(display.resolution()**2*25)*0.08
+   A = [A1,B]
+   bb = np.zeros((display.resolution()**2*25,1))*0.08
+   #A = np.concatenate(A1,B, 1)
+if SPEEDY == True:
+   A = np.array(A)
+   AtA = np.transpose(A)*A;
+   print ('Done with ATA')
+
+############################################
+img = cv2.imread(img)
+#print(img.shape[0]*camera.resolution/img.shape[0])
+
+IMG = cv2.resize(img,(int(img.shape[0]*camera.resolution/img.shape[0]),int(img.shape[1]*camera.resolution/img.shape[0])))    ######****
+CONTRAST = 1.0
+BIAS = (1-CONTRAST)/CONTRAST
+rows = IMG.shape[0]
+cols = IMG.shape[1]
+color = IMG.shape[2]
+REC = np.zeros((rows,cols,color))
+num = 0 
+optRange = 0
+
+for ch in range(color):
+     img = IMG[:,:,ch]
+     b = []
+#    for offset_y in range(-optRange,optRange,1):
+ #       for offset_x in range(-optRange,optRange,1):
+     img0 = cv2.resize(imshift(img),(1,img.shape[0]*img.shape[1]))
+     print (img0)
+     b.append(img0)
+     print (b)
+#     b = b+BIAS
+     if LAMDA:
+        b = [b,bb]
+        print (b)
+        fcn = lambda x: np.linalg.norm(A*x-b)**2
+     if SPEEDY == True:
+        Ab = A.T*b
+        grad = lambda x : 2*(AtA*x-Ab)
+     else:
+        grad  = lambda x : 2*A.T*(A*x-b)
+
+     l = np.zeros((display.resolution()**2*25,1))
+     u = np.ones((display.resolution()**2*25,1))*np.inf
+
+     fun = lambda x : fminunc_wrapper(x,fcn,grade)
+     opts = {'factr': 1e3,'pgtol': 1e-6, 'm': 10}
+     opts.update({'printEvery':10})
+     opts.update({'maxIts':100})
+     #opts.update({'xo':np.zeros((display.resolution()**2*25,1))})
+     xo = np.zeros((display.resolution()**2*25,1))
+     opts['m']= 50
+
+     #tic
+     lf, dummy, info = lbfgsb.L_BFGS_B(xo, fcn,grad,l,u)
+     maxlf = np.max(LF[:])
+     minlf = np.min(LF[:])
+     #toc
+
+     rec = A*LF-BIAS
+     rec = rec[0:len(img[:])]
+     rec = np.reshape(rec, (camera.rsolution,camera.resoluton))
+     rec = cv2.imshift(rec,(offsetx/0.5), (offsety/0.5))
+
+     REC[:,:,ch] = rec
+     mlf = 1
+
+
+     if (max(LF[:])) > mlf:
+        mlf = max(LF[:])
+
+
+MAXI = max(IMG[:])
+MSE = sum((IMG[:]-REC[:])**2)/len((IMG[:]))
+PSNR = np.round (20*log10(MAXI(sqrt(MSE))))
+print ('MAXI',MAXI)
+print ('MSE', MSE)
+print ('PSNR', PSNR)
+
+
+
+
+
+
+
+
+
+#np.savetxt("1.csv",a , delimiter=",") 
+
+
+
+
+
+if __name__ == '__main__':
+     main()
 
 
 

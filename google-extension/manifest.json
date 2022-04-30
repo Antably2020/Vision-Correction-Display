@@ -1,0 +1,20 @@
+{
+  "name": "color blindness",
+  "version": "1.8",
+  "manifest_version": 2,
+  "description": "correct colorblindness in browser.",
+  "homepage_url": "https://campaignersmiu.com",
+  "icons": {
+    "16": "images/eyecon.png",
+    "48": "images/eyecon.png",
+    "128": "images/eyecon.png"
+  },
+  "browser_action": {
+    "default_title": "color blindness",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}

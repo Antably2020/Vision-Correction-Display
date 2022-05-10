@@ -1,8 +1,4 @@
-//Listeners for colorblind filter buttons
-//Injects a javascript file on click event, the js file applies a filter to simulate colorblindness
 
-// stores the currently selected filter so that when the user stops hovering
-// over options, the currently selected filter will still be applied to the popup
 window.selectedFilter = null;
 
 /**

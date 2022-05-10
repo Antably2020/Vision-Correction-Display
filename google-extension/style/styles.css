@@ -12,8 +12,26 @@ body {
 .rgbinput {
   width: 25px;
 }
+.header {
+  display: flex;
+  justify-content: space-evenly;
+}
 
-
+.xbutton{
+  background-color: #000;
+  color:white;
+  border-radius: 5px;
+  padding:10px 40px;
+  display: table;
+  margin:20px 0;
+  float:right;
+  cursor: pointer;
+  opacity: 0.9;
+  
+}
+.xbutton:hover{
+  opacity:1;
+}
 
 #Colorblind-Picker form {
   padding: 20px;

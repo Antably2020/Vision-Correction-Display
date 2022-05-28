@@ -33,7 +33,7 @@ class Pages extends Controller
       $type=escapeshellarg($type);
      // $degree=escapeshellarg($degree);
       $photo_result = shell_exec('python C:/xampp/htdocs/Vision-Correction-Display/vision_correction_MVC/app/controllers/testAPI2.py "'.$path.'" "'.$type.'" "'.$degree.'" 2>&1');
-     echo $degree;
+     //echo $degree;
       }else{
           echo'no degree';
       }

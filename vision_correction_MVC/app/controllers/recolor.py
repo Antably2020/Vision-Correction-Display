@@ -10,56 +10,6 @@ from utils import Transforms, Utils
 
 class Core:
 
-    @staticmethod
-    def simulate(input_path: str,
-                 simulate_type: str = 'protanopia',
-                 simulate_degree_primary: float = 1.0,
-                 simulate_degree_sec: float = 1.0,
-                 return_type: str = 'save',
-                 save_path: str = None):
-        """
-        :param input_path: Input path of the image.
-        :param simulate_type: Type of simulation needed. Can be 'protanopia', 'deutranopia', 'tritanopia', 'hybrid'.
-        :param simulate_degree_primary: Primary degree of simulation: used for 'protanopia', 'deutranopia', 'tritanopia'
-        :param simulate_degree_sec: Secondnary degree of simulation: used for 'hybrid'.
-        :param return_type: How to return the Simulated Image. Use 'pil' for PIL.Image, 'np' for Numpy array,
-                            'save' for Saving to path.
-        :param save_path: Where to save the simulated file. Valid only if return_type is set as 'save'.
-        :return:
-        """
-
-        assert simulate_type in ['protanopia', 'deutranopia', 'tritanopia', 'hybrid'], \
-            'Invalid Simulate Type: {}'.format(simulate_type)
-
-        # Load the image file in LMS colorspace
-        img_lms = Utils.load_lms(input_path)
-
-        if simulate_type == 'protanopia':
-            transform = Transforms.lms_protanopia_sim(degree=simulate_degree_primary)
-        elif simulate_type == 'deutranopia':
-            transform = Transforms.lms_deutranopia_sim(degree=simulate_degree_primary)
-        elif simulate_type == 'tritanopia':
-            transform = Transforms.lms_tritanopia_sim(degree=simulate_degree_primary)
-        else:
-            transform = Transforms.hybrid_protanomaly_deuteranomaly_sim(degree_p=simulate_degree_primary,
-                                                                        degree_d=simulate_degree_sec)
-
-        # Transforming the LMS Image
-        img_sim = np.dot(img_lms, transform)
-
-        # Converting back to RGB colorspace
-        img_sim = np.uint8(np.dot(img_sim, Transforms.lms_to_rgb()) * 255)
-
-        if return_type == 'save':
-            assert save_path is not None, 'No save path provided.'
-            cv2.imwrite(save_path, img_sim)
-            return
-
-        if return_type == 'np':
-            return img_sim
-
-        if return_type == 'pil':
-            return Image.fromarray(img_sim)
 
     @staticmethod
     def correct(input_path: str,
@@ -144,34 +94,7 @@ def main():
     if args.run_all:
         run_all = True
 
-    if args.sim_protanopia or run_all:
-        Core.simulate(input_path=input_path,
-                      return_type='save',
-                      save_path='{}/{}_{}'.format(output_path, 'sim_protanopia', image_name),
-                      simulate_type='protanopia',
-                      simulate_degree_primary=args.protanopia_degree)
-
-    if args.sim_deutranopia or run_all:
-        Core.simulate(input_path=input_path,
-                      return_type='save',
-                      save_path='{}/{}_{}'.format(output_path, 'sim_deutranopia', image_name),
-                      simulate_type='deutranopia',
-                      simulate_degree_primary=args.deutranopia_degree)
-
-    if args.sim_tritanopia or run_all:
-        Core.simulate(input_path=input_path,
-                      return_type='save',
-                      save_path='{}/{}_{}'.format(output_path, 'sim_tritanopia', image_name),
-                      simulate_type='tritanopia',
-                      simulate_degree_primary=args.tritanopia_degree)
-
-    if args.sim_hybrid or run_all:
-        Core.simulate(input_path=input_path,
-                      return_type='save',
-                      save_path='{}/{}_{}'.format(output_path, 'sim_hybrid', image_name),
-                      simulate_type='hybrid',
-                      simulate_degree_primary=args.protanopia_degree,
-                      simulate_degree_sec=args.deutranopia_degree)
+    
 
     if args.correct_colors or run_all:
         Core.correct(input_path=input_path,

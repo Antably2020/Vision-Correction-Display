@@ -9,7 +9,7 @@ stylingID.id = "styleID";
 document.body.appendChild(stylingID);
 
 filterID = document.createElement('div');
-filterID.id = "filterIDnew";
+filterID.id = "filterID";
 filterID.setAttribute('style', 'height: 0; padding: 0; margin: 0; line-height: 0;');
 document.body.appendChild(filterID);
 

@@ -109,3 +109,73 @@ def BackwardTransportExt3(offset, Bvals, Display, Camera, Vs, XtraPix=5):
     return Yo, Vo
 
 
+def build_matrix(display: Display, camera: Camera, Epsilon_x, Epsilon_y,
+                 sampling=20, psf_size=240, XtraPix=5):
+    ind_r = np.zeros(camera.resolution**2*psf_size*2)
+    ind_c = np.zeros(camera.resolution**2*psf_size*2)
+    val_s = np.zeros(camera.resolution**2*psf_size*2)
+
+    # get samples
+    Vs = np.arange(-camera.aperture/2, camera.aperture/2+1/sampling, 1/sampling)
+    Us = np.arange(-camera.aperture/2, camera.aperture/2+1/sampling, 1/sampling)
+
+    us, vs = np.meshgrid(Us, Vs) #represents the camera lens(pupil size)
+    Z = np.zeros(np.shape(us))
+    # we only need the rays that pass through the lens
+    Z[us**2 + vs**2 < (camera.aperture/2)**2] = 1 # circle x^2 + y^2 < z^2
+    
+    # angular resolution
+    HBVals = Angular_BoundaryExt2(display.angular_res, display.screen_pixel_pitch, display.depth, XtraPix)
+    VBVals = Angular_BoundaryExt2(display.angular_res, display.screen_pixel_pitch, display.depth, XtraPix)
+
+    print('start y-v backward transport')
+    Yo, Vo = BackwardTransportExt3(Epsilon_y, HBVals, display, camera, Vs)
+    print('start x-u backward transport')
+    Xo, Uo = BackwardTransportExt3(Epsilon_x, VBVals, display, camera, Vs)
+    
+    ##############
+    Xo[Xo < 0] = 0
+    Xo[Xo >= display.resolution] = display.resolution - 1
+    Yo[Yo < 0] = 0
+    Yo[Yo >= display.resolution] = display.resolution - 1
+
+    Angular_HRes = Angular_VRes = display.angular_res
+    Angular_Area = Angular_VRes * Angular_HRes
+    Camera_Area = camera.resolution ** 2
+    Display_Area = display.resolution ** 2
+    
+    print('start sampling and build projection matrix')
+    index = 0
+    for j in trange(0, camera.resolution):
+        for i in range(0, camera.resolution):
+            #add x to y to collect spatial pixels
+            xo, yo = np.meshgrid(Yo[:, j], Xo[:, i])
+            pixels = np.array([yo.reshape(-1), xo.reshape(-1)]).T
+            #add u to v to collect angular pixels
+            uo, vo = np.meshgrid(Uo[:, j], Vo[:, i])
+            angles = np.array([vo.reshape(-1), uo.reshape(-1)]).T
+            # remove the samples that are out of the camera aprature
+            samples = np.concatenate([pixels, angles], 1)
+            samples = samples[Z.reshape(-1) != 0]
+
+            w = np.shape(samples)[0]
+            b, n = np.unique(samples, return_counts=True, axis=0)
+            
+            CELL = np.hstack([b, n.reshape(-1, 1)])
+
+            for r in range(b.shape[0]):
+                index0 = i * camera.resolution + j
+                index1 = (CELL[r, 1] * display.resolution + CELL[r, 0]) * Angular_Area
+                index2 = CELL[r, 3] * Angular_VRes + CELL[r, 2]
+                ind_r[index] = index0
+                ind_c[index] = index1 + index2
+                val_s[index] = CELL[r, -1] / w
+                index = index + 1
+
+    print('start making sparse system matrix')
+    A = sparse.csc_matrix(
+        (val_s, (ind_r, ind_c)),
+        shape=(Camera_Area, Display_Area*Angular_Area))
+    return A
+
+

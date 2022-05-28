@@ -1,15 +1,15 @@
 // normal
 
-if (document.getElementById("styleID612481")) {
-    stylingID = document.getElementById("styleID612481").remove();
-    filterID = document.getElementById("filterID471924").remove();
+if (document.getElementById("styleID")) {
+    stylingID = document.getElementById("styleID").remove();
+    filterID = document.getElementById("filterID").remove();
 }
 stylingID = document.createElement('style');
-stylingID.id = "styleID612481";
+stylingID.id = "styleID";
 document.body.appendChild(stylingID);
 
 filterID = document.createElement('div');
-filterID.id = "filterID471924";
+filterID.id = "filterID";
 filterID.setAttribute('style', 'height: 0; padding: 0; margin: 0; line-height: 0;');
 document.body.appendChild(filterID);
 
